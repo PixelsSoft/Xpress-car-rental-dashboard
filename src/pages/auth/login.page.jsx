@@ -1,5 +1,6 @@
 import YellowText from '../../components/YellowText.component'
 import { Link } from 'react-router-dom'
+import CustomInput from '../../components/custom-input.component'
 
 export default function Login() {
     return (
@@ -21,8 +22,8 @@ export default function Login() {
             <div className='flex flex-col space-y-8 items-center justify-center w-1/2'>
                 <img src={require('../../assets/images/logo.png')} alt='' />
                 <h3 className='font-bold text-4xl'>Login</h3>
-                <input placeholder='Username' className='rounded-md ring-1 ring-[#FEBD20] px-6 py-4 w-1/2' />
-                <input placeholder='Password' className='rounded-md ring-1 ring-[#FEBD20] px-6 py-4 w-1/2' />
+                <CustomInput placeholder='Username' />
+                <CustomInput placeholder='Password' />
 
                 <div className='flex justify-between w-1/2'>
                     <div className='flex items-center'>
@@ -32,8 +33,8 @@ export default function Login() {
                     <span>Forgot Password?</span>
                 </div>
 
-                <Link to='#'>
-                    <button className='bg-[#5A5A5E] text-white py-4 px-6 w-2/4 rounded-lg text-2xl'> Login</button>
+                <Link to='/dashboard'>
+                    <button className='bg-[#5A5A5E] text-white py-4 px-6 w-[250px] rounded-lg text-2xl'> Login</button>
                 </Link>
             </div>
         </div>

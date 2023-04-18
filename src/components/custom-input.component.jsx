@@ -1,3 +1,5 @@
-export default function CustomInput({ placeholder }) {
-    <input placeholder={placeholder}  className='rounded-md ring-1 ring-[#FEBD20] px-4 py-2 w-1/2' />
+export default function CustomInput({children, ...otherProps}) {
+    return (
+        <input {...otherProps} className='rounded-md border-2 border-[#FEBD20] px-6 py-4 w-1/2' style={{ boxShadow: '10px 20px 15px rgba(0,0,0,0.16)' }} />
+    )
 }
