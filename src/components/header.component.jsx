@@ -8,8 +8,8 @@ export default function Header() {
                 <span className='font-bold text-2xl'>Admin!</span>
             </div>
 
-            <div className='w-8/12 flex justify-evenly items-center'>
-                <div className='w-7/12 relative flex items-center bg-[#00000029] py-5 rounded-2xl px-3'>
+            <div className='w-8/12 flex justify-end xl:justify-evenly space-x-3 xl:space-x-0 items-center'>
+                <div className='w-7/12 relative hidden xl:flex items-center bg-[#00000029] py-5 rounded-2xl px-3'>
                     <input className='w-11/12 bg-transparent outline-none rounded-2xl text-xl' />
                     <img src={require('../assets/icons/search.png')} alt='' className='absolute right-3' />
                 </div>

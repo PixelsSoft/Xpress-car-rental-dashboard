@@ -6,7 +6,7 @@ export default function Layout({ children }) {
     return (
         <div className="flex">
             <Menu />
-            <div className="pl-[150px] w-full p-3">
+            <div className="pl-[340px] w-full p-3">
                 <Header />
                 <div
                     className="w-full h-full"
