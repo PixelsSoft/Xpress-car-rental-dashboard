@@ -3,6 +3,7 @@ import CustomTable from '../components/custom-table/custom-table.component';
 import CustomContainer from '../components/custom-container.component'
 import {usersColumn} from '../config/columns'
 import {usersData} from '../config/table-data'
+import CustomBreadcumb from '../components/custom-breadcumb.component'
 
 export default function User() {
     return (
@@ -15,11 +16,7 @@ export default function User() {
                         </div>
                         <span className="bg-[#FEBD20] opacity-70 p-2">2k+</span>
                     </div>
-                    <div className="rounded-full mx-auto" style={{ boxShadow: '10px 10px 100px rgba(0,0,0,0.50)', }}>
-                        <button className="bg-[#FEBD20] rounded-full text-white w-[160px] py-3 px-5">All</button>
-                        <button className="bg-white rounded-full text-black w-[160px] py-3 px-5">Activated</button>
-                        <button className="bg-white rounded-full text-black w-[160px] py-3 px-5">Deactivate</button>
-                    </div>
+                    <CustomBreadcumb filters={['All', 'Activated', 'Deactivated']} />
                 </div>
             <CustomContainer>
                 <CustomTable columns={usersColumn} data={usersData} pagination={true} perPage={10} />

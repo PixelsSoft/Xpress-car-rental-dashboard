@@ -98,3 +98,73 @@ export const usersData = [
         paymentMethod: require('../assets/images/mastercard.png')
     },
 ]
+
+export const vehiclesData = [
+    {
+        sno: 1,
+        vehicleId: 123,
+        vehicleName: 'Toyota',
+        vehicleRegistration: 'ABC-123',
+        vehicleType: 'Sedan',
+        registerDate: '11-02-2023',
+        vehicleCapacity: 5,
+        rentingPriceDay: 600,
+        status: 'Active'
+    },
+    {
+        sno: 2,
+        vehicleId: 123,
+        vehicleName: 'Toyota',
+        vehicleRegistration: 'ABC-123',
+        vehicleType: 'Sedan',
+        registerDate: '11-02-2023',
+        vehicleCapacity: 5,
+        rentingPriceDay: 600,
+        status: 'Active'
+    },
+    {
+        sno: 3,
+        vehicleId: 123,
+        vehicleName: 'Toyota',
+        vehicleRegistration: 'ABC-123',
+        vehicleType: 'Sedan',
+        registerDate: '11-02-2023',
+        vehicleCapacity: 5,
+        rentingPriceDay: 600,
+        status: 'Active'
+    },
+    {
+        sno: 4,
+        vehicleId: 123,
+        vehicleName: 'Toyota',
+        vehicleRegistration: 'ABC-123',
+        vehicleType: 'Sedan',
+        registerDate: '11-02-2023',
+        vehicleCapacity: 5,
+        rentingPriceDay: 600,
+        status: 'Active'
+    },
+    {
+        sno: 5,
+        vehicleId: 123,
+        vehicleName: 'Toyota',
+        vehicleRegistration: 'ABC-123',
+        vehicleType: 'Sedan',
+        registerDate: '11-02-2023',
+        vehicleCapacity: 5,
+        rentingPriceDay: 600,
+        status: 'Active'
+    },
+]
+
+export const invoicesData = [
+    {
+        status: 'Overdue',
+        due: '6 days ago',
+        date: '2023-04-23',
+        number: 5969,
+        customer: 'Fraya Grant',
+        amountDue: 300,
+        actions: null
+    }
+]

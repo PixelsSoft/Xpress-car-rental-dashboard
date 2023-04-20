@@ -1,9 +1,8 @@
-import Layout from "../components/layout.component";
-
+import Layout from "../../components/layout.component"
 export default function SalesAndPayment() {
     return (
         <Layout>
-            <h1>Sales And Payment</h1>
+            <h1>Sales & Payments</h1>
         </Layout>
     )
 }
