@@ -4,8 +4,8 @@ import CustomInput from '../../components/custom-input.component'
 
 export default function Login() {
     return (
-        <div className='h-screen flex'>
-            <div className='relative h-full w-1/2 border-r-2 border-[#FEBD20]'>
+        <div className='h-screen flex justify-center'>
+            <div className='relative h-full hidden xl:flex lg:w-1/2 border-r-2 border-[#FEBD20]'>
                 <div className='text-4xl pl-10 pt-10'>
                     <h3><YellowText>Welcome</YellowText> to the</h3>
                     <h3><YellowText>Xpress</YellowText> Rental Car <YellowText>Services</YellowText></h3>
@@ -19,13 +19,13 @@ export default function Login() {
                 </div>
             </div>
 
-            <div className='flex flex-col space-y-8 items-center justify-center w-1/2'>
+            <div className='flex flex-col space-y-8 items-center justify-center lg:w-1/2 w-full p-4 lg:p-0'>
                 <img src={require('../../assets/images/logo.png')} alt='' />
                 <h3 className='font-bold text-4xl'>Login</h3>
                 <CustomInput placeholder='Username' />
                 <CustomInput placeholder='Password' />
 
-                <div className='flex justify-between w-1/2'>
+                <div className='flex justify-between w-full xl:w-1/2'>
                     <div className='flex items-center'>
                         <input type='checkbox' className='mr-2' />
                         <label>Remember Me</label>
