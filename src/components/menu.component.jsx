@@ -40,13 +40,13 @@ export default function Menu() {
 
     return (
         <>
-            <div className={`shadow-md ${openMenu && 'hidden'} w-fit h-fit fixed p-3 m-4 rounded-full bg-[#FEBD20] md:hidden flex z-50`}>
-                <FaBars size={40} color='black' onClick={toggleMenu} />
+            <div className={`shadow-md ${openMenu && 'hidden'} w-fit h-fit fixed p-3 m-4 rounded-full bg-[#FEBD20] md:hidden cursor-pointer flex z-50`}>
+                <FaBars size={26} color='black' onClick={toggleMenu} />
             </div>
             <div className={`w-[320px] ${!openMenu && 'hidden'} md:flex h-screen fixed md:left-2 md:top-0 md:p-4 z-10`}>
 
                 <div className='absolute right-3 top-2'>
-                    <span className='text-3xl text-white md:hidden' onClick={toggleMenu}>X</span>
+                    <span className='text-3xl text-white md:hidden cursor-pointer' onClick={toggleMenu}>X</span>
                 </div>
                 <div className={`bg-[#5A5A5E] ${!openMenu ? 'hidden' : 'flex'} md:rounded-2xl h-full md:flex p-3 flex-col items-center justify-between`}>
                     <img src={require('../assets/images/small-logo.png')} alt='' />
@@ -95,7 +95,7 @@ export default function Menu() {
                             </>
                         ))}
                     </ul>
-                    <img src={require('../assets/icons/logout-icon.png')} alt='' />
+                    <img src={require('../assets/icons/logout-icon.png')} alt='' className='cursor-pointer'/>
                 </div>
             </div>
         </>

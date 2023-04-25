@@ -11,11 +11,12 @@ export default function Dashboard() {
     return (
         <Layout>
 
-            <CustomContainer otherStyles='flex flex-col lg:flex-row w-full space-y-4 lg:space-y-0 justify-between items-center lg:divide-x p-4 mt-8'>
-                <StatCard img={require('../assets/images/car-rent.png')} title='Cars on Rent' stat={20} />
-                <StatCard img={require('../assets/images/car-rent.png')} title='Total Amount' stat={'$' + 20000} />
-                <StatCard img={require('../assets/images/car-rent.png')} title='Registered Cars' stat={20} />
-                <StatCard img={require('../assets/images/car-rent.png')} title='Pending Amount' stat={'$' + 22313} border={false} />
+            <CustomContainer otherStyles='lg:grid lg:grid-cols-4 mt-6 lg:divide-x'>
+                <StatCard  title='Cars On Rent' img={require('../assets/images/car-rent.png')} stat={20}/>
+                <StatCard  title='Total Amount' img={require('../assets/icons/edit.png')} stat={'$' + 202323}/>
+                <StatCard  title='Registered Cars' img={require('../assets/icons/car-rental.png')} stat={53}/>
+                <StatCard  title='Pending Amount' img={require('../assets/icons/payment.png')} stat={'$' + 3233}/>
+                
             </CustomContainer>
 
             <CustomContainer otherStyles='mt-10 w-full p-4' >
