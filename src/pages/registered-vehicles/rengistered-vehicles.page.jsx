@@ -15,7 +15,7 @@ export default function RentedVehicles() {
                         <img src={require('../../assets/icons/car-front.png')} alt="" />
                         <span>Registered Vehicle</span>
                     </div>
-                    <span className="bg-[#FEBD20] opacity-70 p-2">2k+</span>
+                    <span className="bg-[#FEBD20] hidden lg:flex opacity-70 p-2">2k+</span>
                 </div>
                 <div className="flex space-x-2">
                     <div className="p-2">

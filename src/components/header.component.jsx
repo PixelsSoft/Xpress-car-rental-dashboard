@@ -4,8 +4,8 @@ export default function Header() {
     return (
         <div className='w-full flex items-center justify-between'>
             <div className='flex flex-col'>
-                <YellowText otherStyles='text-2xl'>Good Morning</YellowText>
-                <span className='font-bold text-2xl'>Admin!</span>
+                <YellowText otherStyles='text-sm'>Good Morning</YellowText>
+                <span className='font-bold text-xl'>Admin!</span>
             </div>
 
             <div className='w-8/12 flex justify-end xl:justify-evenly space-x-3 xl:space-x-0 items-center'>
@@ -15,7 +15,7 @@ export default function Header() {
                 </div>
 
                 <div className='bg-[#FEBD20] bg-opacity-50 p-2 rounded-2xl w-fit relative'>
-                    <img src={require('../assets/icons/notification-bing.png')} alt='' />
+                    <img src={require('../assets/icons/notification-bing.png')} alt='' className='w-[40px] h-[40px]' />
                     <img src={require('../assets/icons/notificiation-circle.png')} alt='' className='absolute right-0 top-0' />
                 </div>
 

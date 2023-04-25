@@ -24,13 +24,13 @@ export default function Invoicing() {
                     <InvoicingStatCard title='Upcoming Payout' amount={'$' + 1100} postfix='USD' />
                 </div>
 
-                <div className="my-4">
+                <div className="my-4 w-full">
                     <div className="space-x-2">
                         <span className="font-bold">0</span>
                         <span>active filters</span>
                     </div>
 
-                    <div>
+                    <div className="w-full">
                         <CustomInput placeholder='All Customers' />
                         <CustomInput placeholder='All Statuses' />
                         <CustomInput placeholder='From' />

@@ -168,3 +168,17 @@ export const invoicesData = [
         actions: null
     }
 ]
+
+
+export const vehicleProfile = [
+    {
+        sno: 1,
+        vehicleId: 1,
+        vehicleName: 'Honda Corolla',
+        vehicleRegistration: 'ABC-123',
+        vehicleType: '600 cc',
+        bookingDate: '02/02/2023',
+        returningDate: '02/02/2023',
+        payment: 'received'
+    }
+]

@@ -1,13 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Login from "./pages/auth/login.page"
 import Dashboard from "./pages/dashboard.page"
-import User from "./pages/user.page"
+import User from "./pages/user/user.page"
 import RentedVehicles from './pages/registered-vehicles/rengistered-vehicles.page'
-import Settings from './pages/settings.page'
+import Settings from './pages/settings/settings.page'
 import SalesAndPayments from './pages/sales-and-payments/sales-and-payments.page'
 import AddVehicle from "./pages/registered-vehicles/add-vehicle.page"
 import Invoicing from "./pages/sales-and-payments/sub-menu/invoicing.page"
 import Transactions from "./pages/transactions/transactions.page"
+import UserProfile from "./pages/user/user-profile.page"
+import RegisteredVehicleProfile from "./pages/registered-vehicles/registered-vehicle-profile.page"
+import AddCard from "./pages/transactions/add-card.component"
 
 export default function App() {
   return (
@@ -22,6 +25,9 @@ export default function App() {
         <Route path='/add-vehicle' element={<AddVehicle />} />
         <Route path='/invoicing' element={<Invoicing />} />
         <Route path='/transactions' element={<Transactions />} />
+        <Route path='/user-profile' element={<UserProfile />} />
+        <Route path='/vehicle-profile' element={<RegisteredVehicleProfile />} />
+        <Route path='/add-card' element={<AddCard />} />
       </Routes>
     </Router>
   )

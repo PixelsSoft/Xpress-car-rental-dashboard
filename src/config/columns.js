@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom"
+
 export const rentedVehicleInfoTableColumns = [
     {
         name: 'Sno',
@@ -50,7 +52,8 @@ export const usersColumn = [
     },
     {
         name: 'Name',
-        selector: row => row.name
+        // selector: row => row.name,
+        cell: row => <Link to='/user-profile'>{row.name}</Link>
     },
     {
         name: 'Contact',
@@ -85,7 +88,7 @@ export const registeredVehiclesColumns = [
     },
     {
         name: 'Vehicle Name',
-        selector: (row) => row.vehicleName
+        cell: row => <Link to='/vehicle-profile'>{row.vehicleName}</Link>
     },
     {
         name: 'Vehicle Registration',
@@ -150,5 +153,41 @@ export const invoicesColumns = [
     {
         name: 'Actions',
         selector: row => row.actions
+    },
+]
+
+
+export const vehicleProfileColumns = [
+    {
+        name: 'Sno',
+        selector: row => row.sno
+    },
+    {
+        name: 'Vehicle ID',
+        selector: row => row.vehicleId
+    },
+    {
+        name: 'Vehicle Name',
+        selector: row => row.vehicleName
+    },
+    {
+        name: 'Vehicle Registration #',
+        selector: row => row.vehicleRegistration
+    },
+    {
+        name: 'vehicleType',
+        selector: row => row.vehicleType
+    },
+    {
+        name: 'Booking Date',
+        selector: row => row.bookingDate
+    },
+    {
+        name: 'Returning Date',
+        selector: row => row.returningDate
+    },
+    {
+        name: 'Payment',
+        selector: row => row.payment
     },
 ]
