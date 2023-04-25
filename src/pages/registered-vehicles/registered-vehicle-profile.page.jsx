@@ -4,8 +4,8 @@ import CustomButton from '../../components/custom-button.component'
 import UserDetailBox from '../../components/user-detail-box.component'
 import CustomTable from '../../components/custom-table/custom-table.component'
 
-import {vehicleProfileColumns} from '../../config/columns'
-import {vehicleProfile} from '../../config/table-data'
+import { vehicleProfileColumns } from '../../config/columns'
+import { vehicleProfile } from '../../config/table-data'
 
 export default function RegisteredVehicleProfile() {
     return (
@@ -24,13 +24,13 @@ export default function RegisteredVehicleProfile() {
                 </div>
 
 
-                <div className='flex items-center space-x-4'>
-                    <img src={require('../../assets/images/toyota.png')}  alt='' width={365} height={190}/>
-                    <img src={require('../../assets/images/toyota.png')}  alt='' width={365} height={190}/>
+                <div className='flex items-center space-x-4 mt-10'>
+                    <img src={require('../../assets/images/toyota.png')} alt='' width={365} height={190} />
+                    <img src={require('../../assets/images/toyota.png')} alt='' width={365} height={190} />
                 </div>
 
 
-                <div className='flex flex-wrap xl:flex-row xl:items-center mb-10'>
+                <div className='flex flex-wrap flex-col md:flex-row xl:flex-row xl:items-center my-4'>
                     <UserDetailBox title='Vehicle Name' description='Honda Corolla' />
                     <UserDetailBox title='Vehcile ID' description='123' />
                     <UserDetailBox title='Vehcile Registration #' description='KCL-123' />
@@ -39,7 +39,10 @@ export default function RegisteredVehicleProfile() {
                     <UserDetailBox title='Vehicle Capacity' description='4' />
                 </div>
 
-                <CustomTable data={vehicleProfile}  columns={vehicleProfileColumns}/>
+                <div className='px-4'>
+                    <h1 className='text-sm font-bold lg:text-xl my-3'>Renting History</h1>
+                    <CustomTable data={vehicleProfile} columns={vehicleProfileColumns} />
+                </div>
             </CustomContainer>
         </Layout>
     )

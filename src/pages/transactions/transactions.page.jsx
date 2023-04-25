@@ -12,7 +12,7 @@ export default function Transactions() {
                     <div className='flex justify-between items-center'>
                         <div className='flex justify-between items-center space-x-3'>
                             <img src={require('../../assets/icons/car-front.png')} alt='' />
-                            <h1 className='font-bold text-md xl:text-2xl'>Transactions</h1>
+                            <h1 className='font-bold text-md xl:text-xl'>Transactions</h1>
                         </div>
                         <img src={require('../../assets/icons/candle.png')} alt='' />
                     </div>
@@ -27,7 +27,7 @@ export default function Transactions() {
 
                 <div className='w-full mt-10 xl:mt-0 xl:w-4/12'>
                     <div className='flex items-center justify-between w-full'>
-                        <h3 className='font-bold text-md xl:text-2xl'>Added Cards</h3>
+                        <h3 className='font-bold text-md xl:text-xl'>Added Cards</h3>
                         <Link to='/add-card'>
                             <CustomButton>Add New Card</CustomButton>
                         </Link>

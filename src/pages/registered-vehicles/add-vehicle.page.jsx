@@ -7,11 +7,11 @@ import RecentlyAddedVehicleCard from '../../components/recently-added-vehicle-ca
 export default function AddVehicle() {
     return (
         <Layout>
-            <CustomContainer otherStyles='p-6 flex flex-col xl:flex-row'>
+            <CustomContainer otherStyles='p-6 flex flex-col xl:flex-row mt-8'>
                 <div>
                     <div className='flex items-center space-x-3'>
                         <img src={require('../../assets/icons/car-front.png')} alt='' />
-                        <h1 className='font-bold text-2xl'>Add New Vehicle</h1>
+                        <h1 className='font-bold text-xl'>Add New Vehicle</h1>
                     </div>
 
                     <form className='w-full mt-6'>

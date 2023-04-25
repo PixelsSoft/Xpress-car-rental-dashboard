@@ -17,7 +17,7 @@ export default function Invoicing() {
                     <CustomButton>Create an invoice</CustomButton>
                 </div>
 
-                <div className="border-slate-200 border-2 p-8 mt-8 rounded-lg flex justify-evenly">
+                <div className="border-slate-200 border-2 p-8 mt-8 rounded-lg flex flex-col lg:flex-row justify-evenly">
                     <InvoicingStatCard title='Overdue' amount={'$' + 1100} postfix='USD' />
                     <InvoicingStatCard title='Due within next 30 days' amount={'$' + 1100} postfix='USD' />
                     <InvoicingStatCard title='Average time to get paid' amount={2} postfix='Days' />

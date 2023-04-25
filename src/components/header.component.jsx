@@ -3,7 +3,7 @@ import YellowText from '../components/YellowText.component'
 export default function Header() {
     return (
         <div className='w-full flex items-center justify-between'>
-            <div className='flex flex-col'>
+            <div className='flex flex-col ml-[100px] md:ml-0'>
                 <YellowText otherStyles='text-sm'>Good Morning</YellowText>
                 <span className='font-bold text-xl'>Admin!</span>
             </div>
@@ -20,7 +20,9 @@ export default function Header() {
                 </div>
 
                 <div className='flex items-center space-x-2'>
-                    <img src={require('../assets/images/profile-pic.png')} alt='' />
+                    <div className='border-2 border-[#FEBD20] rounded-xl h-[60px] w-[60px]'>
+
+                    </div>
                     <div className='flex flex-col'>
                         <YellowText>Hi</YellowText>
                         <span>Edward!</span>

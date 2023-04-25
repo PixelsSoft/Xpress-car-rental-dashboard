@@ -6,7 +6,7 @@ import CustomButton from '../../components/custom-button.component'
 export default function AddCard() {
     return (
         <Layout>
-            <CustomContainer otherStyles='p-4 flex flex-col xl:flex-row justify-between'>
+            <CustomContainer otherStyles='p-4 flex mt-10 flex-col xl:flex-row justify-between'>
                 <div className='xl:w-7/12 w-full'>
                     <div className='flex items-center justify-between'>
                         <div className='flex items-center space-x-3'>
@@ -30,7 +30,7 @@ export default function AddCard() {
                     </form>
                 </div>
 
-                <div className='xl:w-4/12 w-full mt-10 xl:mt-0'>
+                <div className='xl:w-4/12 w-full mt-10 xl:mt-0 border-t-2 border-slate-300 pt-4 xl:border-t-0'>
                     <div className='flex items-center justify-between '>
                         <h1 className='font-bold text-sm lg:text-lg'>Added Cards:</h1>
                         <CustomButton>Add New Card</CustomButton>

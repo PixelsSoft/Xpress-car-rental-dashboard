@@ -11,11 +11,11 @@ export default function Dashboard() {
     return (
         <Layout>
 
-            <CustomContainer otherStyles='flex w-full justify-between items-center p-4 mt-8'>
+            <CustomContainer otherStyles='flex flex-col lg:flex-row w-full space-y-4 lg:space-y-0 justify-between items-center lg:divide-x p-4 mt-8'>
                 <StatCard img={require('../assets/images/car-rent.png')} title='Cars on Rent' stat={20} />
-                <StatCard img={require('../assets/images/car-rent.png')} title='Cars on Rent' stat={20} />
-                <StatCard img={require('../assets/images/car-rent.png')} title='Cars on Rent' stat={20} />
-                <StatCard img={require('../assets/images/car-rent.png')} title='Cars on Rent' stat={20} border={false} />
+                <StatCard img={require('../assets/images/car-rent.png')} title='Total Amount' stat={'$' + 20000} />
+                <StatCard img={require('../assets/images/car-rent.png')} title='Registered Cars' stat={20} />
+                <StatCard img={require('../assets/images/car-rent.png')} title='Pending Amount' stat={'$' + 22313} border={false} />
             </CustomContainer>
 
             <CustomContainer otherStyles='mt-10 w-full p-4' >

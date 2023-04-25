@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 export default function RentedVehicles() {
     return (
         <Layout>
-            <div className="flex items-center mt-4 justify-between p-3">
+            <div className="flex items-center mt-10 justify-between p-3">
                 <div className="flex items-center">
                     <div className="flex items-center space-x-2 mr-10 font-bold text-lg">
                         <img src={require('../../assets/icons/car-front.png')} alt="" />
