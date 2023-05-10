@@ -116,6 +116,19 @@ export const registeredVehiclesColumns = [
     },
 ]
 
+export const createInvoiceColumn = [
+    {
+        name: 'Items',
+        selector: row => row.items,
+        cell: row => <div>{row.name}</div>
+    },
+    {
+        name: 'quantity',
+        selector: row => row.quantity,
+    }
+
+]
+
 export const invoicesColumns = [
     {
         name: 'Status',
@@ -127,7 +140,7 @@ export const invoicesColumns = [
                     fontWeight: 'bold',
                     color: 'red'
                 }
-            }
+            },
         ]
     },
     {

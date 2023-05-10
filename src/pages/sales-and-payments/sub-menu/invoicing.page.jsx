@@ -7,6 +7,7 @@ import CustomTable from "../../../components/custom-table/custom-table.component
 import { invoicesColumns } from '../../../config/columns'
 import { invoicesData } from '../../../config/table-data'
 import CustomBreadcumb from '../../../components/custom-breadcumb.component'
+import { Link } from "react-router-dom";
 
 export default function Invoicing() {
     return (
@@ -14,7 +15,9 @@ export default function Invoicing() {
             <CustomContainer otherStyles='p-4 mt-10'>
                 <div className="flex justify-between items-center">
                     <h1 className="font-bold text-2xl">Invoices</h1>
-                    <CustomButton>Create an invoice</CustomButton>
+                    <Link to='/create-invoice'>
+                        <CustomButton>Create an invoice</CustomButton>
+                    </Link>
                 </div>
 
                 <div className="border-slate-200 border-2 p-8 mt-8 rounded-lg flex flex-col lg:flex-row justify-evenly">

@@ -1,22 +1,13 @@
 import Menu from "./menu.component";
-import background from '../assets/images/car.png'
 import Header from "./header.component";
 
 export default function Layout({ children }) {
     return (
         <div className="flex">
             <Menu />
-            <div className="md:pl-[340px] w-full p-3">
+            <div className="md:pl-[300px] w-full p-3">
                 <Header />
-                <div
-                    className="w-full h-full"
-                    style={{
-                        backgroundImage: `url(${background})`,
-                        backgroundSize: 'contain',
-                        backgroundRepeat: 'no-repeat',
-                        backgroundPosition: 'center',
-                    }}
-                >
+                <div className="w-full h-full">
                     {children}
                 </div>
             </div>

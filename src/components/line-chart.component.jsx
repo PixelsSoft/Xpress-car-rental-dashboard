@@ -63,7 +63,7 @@ export const data = {
 
 export default function LineChart() {
   return (
-    <div className='w-full xl:w-2/3 h-[400px] text-2xl'>
+    <div className='w-full h-[400px] text-2xl'>
       <Line options={options} data={data} />
     </div>
   )

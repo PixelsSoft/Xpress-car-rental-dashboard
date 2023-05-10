@@ -1,0 +1,11 @@
+.file-upload {
+  border: 1px solid black;
+  border-radius: 3px;
+  padding: 4px;
+  font-size: small;
+}
+
+.file-upload input {
+  overflow: hidden;
+  width: 0;
+}

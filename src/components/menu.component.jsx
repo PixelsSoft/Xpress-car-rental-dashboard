@@ -74,7 +74,7 @@ export default function Menu() {
                                 {menu.subMenu && userSubMenuOpen && (
                                     <ul>
                                         {menu.title === 'User' && menu.subMenuItems.map((subMenuItem, index) => (
-                                            <li className='text-sm font-semibold border-l-2 border-gray-300 text-white flex items-center gap-x-4 cursor-pointer p-2 px-5'>
+                                            <li key={index} className='text-sm font-semibold border-l-2 border-gray-300 text-white flex items-center gap-x-4 cursor-pointer p-2 px-5'>
                                                 {subMenuItem.title}
                                             </li>
                                         ))}
@@ -84,7 +84,7 @@ export default function Menu() {
                                 {menu.subMenu && salesAndPaymentsSubMenu && (
                                     <ul>
                                         {menu.title === 'Sales & Payments' && menu.subMenuItems.map((subMenuItem, index) => (
-                                            <Link to={subMenuItem.to}>
+                                            <Link to={subMenuItem.to} key={index}>
                                                 <li className='text-sm font-semibold border-l-2 border-gray-300 text-white flex items-center gap-x-4 cursor-pointer p-2 px-5'>
                                                     {subMenuItem.title}
                                                 </li>

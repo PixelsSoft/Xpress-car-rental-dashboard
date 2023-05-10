@@ -22,11 +22,6 @@ export default function Dashboard() {
             <CustomContainer otherStyles='mt-10 w-full p-4' >
                 <h2 className='font-bold text-3xl'>Dashboard</h2>
                 <div className='w-full flex flex-row justify-evenly items-center'>
-                    <div className='p-4 w-3/12 flex-col space-y-4 hidden xl:flex'>
-                        <h3 className='font-bold text-2xl text-center'>Connect Your Bank Account Or Credit Card</h3>
-                        <p className='text-xl text-center'>Automate your bookkeeping by importing transactions automatically</p>
-                        <button className='p-3 rounded-xl font-bold bg-[#FEBD20]'>Connect my account</button>
-                    </div>
                     <BarChart />
                 </div>
             </CustomContainer>
