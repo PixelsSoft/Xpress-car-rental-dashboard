@@ -18,9 +18,9 @@ export default function App() {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Login />} />
-        <Route element={<ProtectedRoutes />}>
-          <Route path='/dashboard' element={<Dashboard />} />
+        {/* <Route path='/' element={<Login />} />
+        <Route element={<ProtectedRoutes />}> */}
+          <Route path='/' element={<Dashboard />} />
           <Route path='/sales-and-payments' element={<SalesAndPayments />} />
           <Route path='/users' element={<User />} />
           <Route path='/registered-vehicles' element={<RentedVehicles />} />
@@ -32,7 +32,7 @@ export default function App() {
           <Route path='/vehicle-profile' element={<RegisteredVehicleProfile />} />
           <Route path='/add-card' element={<AddCard />} />
           <Route path='/create-invoice' element={<CreateInvoice />} />
-        </Route>
+        {/* </Route> */}
       </Routes>
     </Router>
   )
