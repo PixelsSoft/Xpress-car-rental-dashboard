@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import Login from "./pages/auth/login.page"
+// import Login from "./pages/auth/login.page"
 import Dashboard from "./pages/dashboard.page"
 import User from "./pages/user/user.page"
 import RentedVehicles from './pages/registered-vehicles/rengistered-vehicles.page'
@@ -11,7 +11,7 @@ import Transactions from "./pages/transactions/transactions.page"
 import UserProfile from "./pages/user/user-profile.page"
 import RegisteredVehicleProfile from "./pages/registered-vehicles/registered-vehicle-profile.page"
 import AddCard from "./pages/transactions/add-card.component"
-import ProtectedRoutes from "./components/private-routes.component"
+// import ProtectedRoutes from "./components/private-routes.component"
 import CreateInvoice from "./pages/sales-and-payments/sub-menu/create-invoice.page"
 
 export default function App() {
