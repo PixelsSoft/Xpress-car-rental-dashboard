@@ -60,12 +60,9 @@ export default function AddVehicle() {
             setDescription('')
             setCapacity(0)
             setVehicleType('')
-
-            e.target.images.files.length = 0
+            
             setLoading(false)
         } catch (err) {
-            console.log(err)
-            console.log(err.response.data)
             errorNotify(err.message)
             setLoading(false)
         }
