@@ -58,10 +58,10 @@ export default function AddVehicle() {
             setPricePerWeek('')
             setPricePerMonth('')
             setDescription('')
-            setCapacity()
+            setCapacity(0)
             setVehicleType('')
 
-            images = null
+            e.target.images.files.length = 0
             setLoading(false)
         } catch (err) {
             console.log(err)
