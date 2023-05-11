@@ -5,20 +5,29 @@ import { useState } from 'react'
 import API from '../../api/api'
 import axios from 'axios'
 import {errorNotify} from '../../utils/success-notify.util'
+import CustomButton from '../../components/custom-button.component'
 
 export default function Login(props) {
     const navigation = useNavigate()
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
+
     const submit = async () => {
         try {
             if(!email || !password) return errorNotify('Email and password are required')
+
+            setLoading(true)
             const { data } = await axios.post(API.LOGIN, {
                 email, password
             })
+
+            console.log(data)
             localStorage.setItem('@user_details', JSON.stringify({
                 ...data.data
             }))
+
+            setLoading(false)
 
             navigation('/dashboard')
 
@@ -26,6 +35,7 @@ export default function Login(props) {
             console.log(err)
             console.log(err.response.data)
             errorNotify(err.response.data.message)
+            setLoading(false)
         }
     }
     return (
@@ -57,7 +67,7 @@ export default function Login(props) {
                     </div>
                     <span>Forgot Password?</span>
                 </div>
-                <button onClick={submit} className='bg-[#5A5A5E] text-white py-4 px-6 w-[250px] rounded-lg text-2xl'> Login</button>
+                <CustomButton loading={loading} onClick={submit} className='bg-[#5A5A5E] text-white py-4 px-6 w-[250px] rounded-lg text-2xl'> Login</CustomButton>
             </div>
         </div>
     )

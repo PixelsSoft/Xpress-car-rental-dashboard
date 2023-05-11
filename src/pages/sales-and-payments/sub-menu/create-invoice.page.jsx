@@ -19,6 +19,7 @@ export default function CreateInvoice() {
     const [dueDate, setDueDate] = useState('')
     const [items, setItems] = useState([]);
     const [total, setTotal] = useState(0);
+    const [loading, setLoading] = useState(false)
 
     const getVehicles = async () => {
         try {
@@ -43,11 +44,28 @@ export default function CreateInvoice() {
         try {
             e.preventDefault()
 
-            if(!customerName) return errorNotify('Customer name is required')
-            if(!customerEmail) return errorNotify('Customer email is required')
-            if(!invoiceDate) return errorNotify('Invoice date is required')
-            if(!dueDate) return errorNotify('Payment due date is required')
-            if(items.length < 1) return errorNotify('Please add items in receipt')
+            setLoading(true)
+
+            if(!customerName) {
+                setLoading(false)
+                return errorNotify('Customer name is required')
+            }
+            if(!customerEmail) {
+                setLoading(false)
+                return errorNotify('Customer email is required')
+            }
+            if(!invoiceDate) {
+                setLoading(false)
+                return errorNotify('Invoice date is required')
+            }
+            if(!dueDate) { 
+                setLoading(false)
+                return errorNotify('Payment due date is required')
+            }
+            if(items.length < 1) {
+                setLoading(false)
+                return errorNotify('Please add items in receipt')
+            }
 
             await axios.post(API.CREATE_INVOICE, {
                 invoiceNumber,
@@ -72,9 +90,12 @@ export default function CreateInvoice() {
             setItems([])
             setTotal('')
             generateInvoiceNumber()
+
+            setLoading(false)
         } catch (err) {
             console.log(err)
             errorNotify(err.response.data.message)
+            setLoading(false)
         }
     }
 
@@ -127,7 +148,7 @@ export default function CreateInvoice() {
                     </div>
                     <div className='flex space-x-3 ml-4 mt-10'>
                         <CustomButton>Print</CustomButton>
-                        <CustomButton type='submit' onClick={sendReceiptEmail}>Email Receipt</CustomButton>
+                        <CustomButton loading={loading} type='submit' onClick={sendReceiptEmail}>Email Receipt</CustomButton>
                     </div>
                 </div>
             </CustomContainer>

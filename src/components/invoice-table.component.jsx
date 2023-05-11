@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import Popup from 'reactjs-popup';
 import './custom-modal/custom-modal.css'
 import CustomInput from "./custom-input.component";
@@ -35,20 +35,19 @@ const InvoiceTable = ({ vehicles, items, setItems, total, setTotal }) => {
   //   setItems(updatedItems);
   // };
 
-  const calculateTotal = () => {
-    console.log(items[0])
-    const total = items.reduce((acc, item) => acc + item.price, 0);
-    setTotal(total);
-  };
-
   const onSelectChange = e => {
     const foundVehicle = vehicles.find(vehicle => vehicle._id === e.target.value)
     setSelectedCar(foundVehicle)
   }
 
+  const calculateTotal = useCallback(() => {
+    const total = items.reduce((acc, item) => acc + item.price, 0);
+    setTotal(total);
+  }, [items, setTotal]);
+
   useEffect(() => {
     calculateTotal()
-  }, [items])
+  }, [calculateTotal])
 
 
   return (

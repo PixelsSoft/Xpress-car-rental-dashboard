@@ -10,8 +10,9 @@ export default function Menu() {
     const [salesAndPaymentsSubMenu, setSalesAndPaymentsSubMenu] = useState(false)
 
     const menus = [
-        { title: 'Dashboard', icon: require('../assets/icons/dashboard-icon.png'), to: '/dashboard' },
+        { id: 1, title: 'Dashboard', icon: require('../assets/icons/dashboard-icon.png'), to: '/dashboard' },
         {
+            id: 2,
             title: 'Sales & Payments',
             icon: require('../assets/icons/card-tick.png'),
             to: '#',
@@ -22,6 +23,7 @@ export default function Menu() {
             ]
         },
         {
+            id: 3,
             title: 'User',
             icon: require('../assets/icons/user-icon.png'),
             to: '/users',
@@ -31,9 +33,9 @@ export default function Menu() {
                 { title: 'Users from App' }
             ]
         },
-        { title: 'Registered Vehicles', icon: require('../assets/icons/car-icon.png'), to: '/registered-vehicles' },
-        { title: 'Settings', icon: require('../assets/icons/setting-icon.png'), to: '/settings' },
-        { title: 'Transactions', icon: require('../assets/icons/card-tick.png'), to: '/transactions' }
+        { id: 4, title: 'Registered Vehicles', icon: require('../assets/icons/car-icon.png'), to: '/registered-vehicles' },
+        { id: 5, title: 'Settings', icon: require('../assets/icons/setting-icon.png'), to: '/settings' },
+        { id: 6, title: 'Transactions', icon: require('../assets/icons/card-tick.png'), to: '/transactions' }
     ]
 
     const toggleMenu = () => setOpenMenu(!openMenu)
@@ -54,7 +56,7 @@ export default function Menu() {
                     <ul className='w-full h-2/3 flex flex-col justify-evenly'>
                         {menus.map((menu, index) => (
                             <>
-                                <li key={index} className='text-sm flex items-center gap-x-4 cursor-pointer p-2'>
+                                <li key={menu.id} className='text-sm flex items-center gap-x-4 cursor-pointer p-2'>
                                     <span className='w-[24px] h-[24px] block float-left'>
                                         <img src={menu.icon} alt='' />
                                     </span>
@@ -74,7 +76,7 @@ export default function Menu() {
                                 {menu.subMenu && userSubMenuOpen && (
                                     <ul>
                                         {menu.title === 'User' && menu.subMenuItems.map((subMenuItem, index) => (
-                                            <li key={index} className='text-sm font-semibold border-l-2 border-gray-300 text-white flex items-center gap-x-4 cursor-pointer p-2 px-5'>
+                                            <li key={subMenuItem.title} className='text-sm font-semibold border-l-2 border-gray-300 text-white flex items-center gap-x-4 cursor-pointer p-2 px-5'>
                                                 {subMenuItem.title}
                                             </li>
                                         ))}
@@ -84,7 +86,7 @@ export default function Menu() {
                                 {menu.subMenu && salesAndPaymentsSubMenu && (
                                     <ul>
                                         {menu.title === 'Sales & Payments' && menu.subMenuItems.map((subMenuItem, index) => (
-                                            <Link to={subMenuItem.to} key={index}>
+                                            <Link to={subMenuItem.to} key={subMenuItem.title}>
                                                 <li className='text-sm font-semibold border-l-2 border-gray-300 text-white flex items-center gap-x-4 cursor-pointer p-2 px-5'>
                                                     {subMenuItem.title}
                                                 </li>

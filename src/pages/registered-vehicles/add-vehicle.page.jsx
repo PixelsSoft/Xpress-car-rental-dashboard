@@ -16,14 +16,18 @@ export default function AddVehicle() {
     const [description, setDescription] = useState('')
     const [vehicleType, setVehicleType] = useState('')
     const [capacity, setCapacity] = useState()
+    const [loading, setLoading] = useState(false)
 
     let token = JSON.parse(localStorage.getItem('@user_details')).token
 
     const addVehicleSubmit = async (e) => {
         try {
             e.preventDefault()
-
-            if (!name || !registrationNumber || !pricePerDay || !pricePerWeek || !pricePerMonth || !description || !vehicleType || !capacity) return errorNotify('All fields are required.')
+            setLoading(true)
+            if (!name || !registrationNumber || !pricePerDay || !pricePerWeek || !pricePerMonth || !description || !vehicleType || !capacity) {
+                setLoading(false)
+                return errorNotify('All fields are required.')
+        }
 
             const images = e.target.elements.images.files
             const formData = new FormData()
@@ -55,10 +59,12 @@ export default function AddVehicle() {
             setDescription('')
             setCapacity(0)
             setVehicleType('')
+            setLoading(false)
         } catch (err) {
             console.log(err)
             console.log(err.response.data)
             errorNotify(err.message)
+            setLoading(false)
         }
     }
     return (
@@ -90,7 +96,7 @@ export default function AddVehicle() {
 
                         <div className='flex space-x-3 ml-4 mt-10'>
                             <CustomButton>Cancel</CustomButton>
-                            <CustomButton type='submit'>Add Vehicle</CustomButton>
+                            <CustomButton type='submit' loading={loading}>Add Vehicle</CustomButton>
                         </div>
                     </form>
                 </div>

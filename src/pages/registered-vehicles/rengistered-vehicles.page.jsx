@@ -12,13 +12,17 @@ export const CustomIndexCell = ({ rowIndex }) => <div>{rowIndex}</div>;
 
 export default function RentedVehicles() {
     const [vehicles, setVehicles] = useState([])
+    const [loading, setLoading] = useState(false)
 
     const getVehicles = async () => {
         try {
+            setLoading(true)
             const response = await axios.get(API.GET_VEHICLES)
             setVehicles(response.data.data)
+            setLoading(false)
         } catch (err) { 
             console.log(err)
+            setLoading(false)
         }
     }
 
@@ -46,7 +50,7 @@ export default function RentedVehicles() {
                 </div>
             </div>
             <CustomContainer>
-                <CustomTable columns={registeredVehiclesColumns} data={vehicles} />
+                <CustomTable loading={loading} columns={registeredVehiclesColumns} data={vehicles} />
             </CustomContainer>
         </Layout>
     )

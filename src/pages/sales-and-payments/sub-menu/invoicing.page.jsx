@@ -9,7 +9,8 @@ import CustomBreadcumb from '../../../components/custom-breadcumb.component'
 import { Link } from "react-router-dom";
 import axios from "axios";
 import API from '../../../api/api'
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
+import {errorNotify} from '../../../utils/success-notify.util'
 
 export default function Invoicing() {
     const [invoices, setInvoices] = useState([])
@@ -17,31 +18,40 @@ export default function Invoicing() {
     // const [dueWithin30Days, setDueWithin30Days] = useState(0)
     // const [averageTimeToGetPaid, setAverageTimeToGetPaid] = useState(0)
     const [upcomingPayouts, setUpcomingPayouts] = useState(0)
+    const [loading, setLoading] = useState(false)
 
-    const calculateStats = () => {
-        setOverdue(invoices.reduce((acc, invoice) => {
-            if(invoice.status === 'overdue') {
-                return acc + invoice.total
+    const calculateStats = useCallback(() => {
+        setOverdue(
+          invoices.reduce((acc, invoice) => {
+            if (invoice.status === 'overdue') {
+              return acc + invoice.total
             }
             return 0
-        }, 0))
-
+          }, 0)
+        )
+      
         setUpcomingPayouts(invoices.reduce((acc, invoice) => acc + invoice.total, 0))
-    }
-    
-
-    const getInvoices = async () => {
+      }, [invoices, setOverdue, setUpcomingPayouts])
+      
+      const getInvoices = useCallback(async () => {
         try {
-            const response = await axios.get(API.GET_INVOICES)
-            setInvoices(response.data.data)
+          setLoading(true)
+          const response = await axios.get(API.GET_INVOICES)
+          setInvoices(response.data.data)
+          setLoading(false)
         } catch (err) {
-            console.log(err)
+          errorNotify(err.message)
+          setLoading(false)
         }
-    }
-    useEffect(() => {
+      }, [setInvoices, setLoading])
+    
+      useEffect(() => {
         getInvoices()
+      }, [getInvoices])
+      
+      useEffect(() => {
         calculateStats()
-    }, [])
+      }, [calculateStats])
     return (
         <Layout>
             <CustomContainer otherStyles='p-4 mt-10'>
@@ -76,7 +86,7 @@ export default function Invoicing() {
                 <div className="mb-10">
                     <CustomBreadcumb filters={['Unpaid', 'Draft', 'All Invoices']} />
                 </div>
-                <CustomTable columns={invoicesColumns} data={invoices} />
+                <CustomTable loading={loading} columns={invoicesColumns} data={invoices} />
             </CustomContainer>
         </Layout>
     )
