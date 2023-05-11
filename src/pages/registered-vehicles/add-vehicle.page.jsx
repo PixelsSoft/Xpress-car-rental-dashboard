@@ -6,6 +6,7 @@ import RecentlyAddedVehicleCard from '../../components/recently-added-vehicle-ca
 import { useState } from 'react'
 import axios from 'axios'
 import { errorNotify, successNotify } from '../../utils/success-notify.util'
+import API from '../../api/api'
 
 export default function AddVehicle() {
     const [name, setName] = useState('')
@@ -29,7 +30,7 @@ export default function AddVehicle() {
                 return errorNotify('All fields are required.')
         }
 
-            const images = e.target.elements.images.files
+            let images = e.target.elements.images.files
             const formData = new FormData()
 
             formData.append('name', name)
@@ -44,7 +45,7 @@ export default function AddVehicle() {
             for (let i = 0; i < images.length; i++) {
                 formData.append('images', images[i])
             }
-            await axios.post('http://localhost:8001/cars/add', formData, {
+            await axios.post(API.ADD_VEHICLE, formData, {
                 headers: {
                     Authorization: token
                 }
@@ -57,8 +58,10 @@ export default function AddVehicle() {
             setPricePerWeek('')
             setPricePerMonth('')
             setDescription('')
-            setCapacity(0)
+            setCapacity()
             setVehicleType('')
+
+            images = null
             setLoading(false)
         } catch (err) {
             console.log(err)
