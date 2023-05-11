@@ -2,11 +2,29 @@ import CustomContainer from "../../components/custom-container.component";
 import CustomTable from "../../components/custom-table/custom-table.component";
 import Layout from "../../components/layout.component";
 import { registeredVehiclesColumns } from '../../config/columns'
-import { vehiclesData } from '../../config/table-data'
 import CustomButton from '../../components/custom-button.component'
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import API from '../../api/api'
+
+export const CustomIndexCell = ({ rowIndex }) => <div>{rowIndex}</div>;
 
 export default function RentedVehicles() {
+    const [vehicles, setVehicles] = useState([])
+
+    const getVehicles = async () => {
+        try {
+            const response = await axios.get(API.GET_VEHICLES)
+            setVehicles(response.data.data)
+        } catch (err) { 
+            console.log(err)
+        }
+    }
+
+    useEffect(() => {
+        getVehicles()
+    }, [])
     return (
         <Layout>
             <div className="flex items-center mt-10 justify-between p-3">
@@ -28,7 +46,7 @@ export default function RentedVehicles() {
                 </div>
             </div>
             <CustomContainer>
-                <CustomTable columns={registeredVehiclesColumns} data={vehiclesData} />
+                <CustomTable columns={registeredVehiclesColumns} data={vehicles} />
             </CustomContainer>
         </Layout>
     )

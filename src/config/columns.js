@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import { CustomIndexCell } from "../pages/registered-vehicles/rengistered-vehicles.page"
 
 export const rentedVehicleInfoTableColumns = [
     {
@@ -80,35 +81,31 @@ export const usersColumn = [
 export const registeredVehiclesColumns = [
     {
         name: 'Sno',
-        selector: (row) => row.sno
+        selector: (row, idx) => <CustomIndexCell rowIndex={idx} />
     },
     {
         name: 'Vehicle ID',
-        selector: (row) => row.vehicleId
+        selector: (row) => row._id
     },
     {
         name: 'Vehicle Name',
-        cell: row => <Link to='/vehicle-profile'>{row.vehicleName}</Link>
+        cell: row => <Link to='/vehicle-profile'>{row.name}</Link>
     },
     {
         name: 'Vehicle Registration',
-        selector: (row) => row.vehicleRegistration
+        selector: (row) => row.registrationNo
     },
     {
         name: 'Vehicle Type',
-        selector: (row) => row.vehicleType
-    },
-    {
-        name: 'Register Date',
-        selector: (row) => row.registerDate
+        selector: (row) => row.type
     },
     {
         name: 'Vehicle Capacity',
-        selector: (row) => row.vehicleCapacity
+        selector: (row) => row.capacity
     },
     {
         name: 'Renting Price / Day',
-        selector: (row) => row.rentingPriceDay
+        selector: (row) => row.price.pricePerDay
     },
     {
         name: 'Status',
@@ -135,33 +132,47 @@ export const invoicesColumns = [
         selector: row => row.status,
         conditionalCellStyles: [
             {
-                when: row => row.status === 'Overdue',
+                when: row => row.status === 'overdue',
                 style: {
                     fontWeight: 'bold',
                     color: 'red'
+                }
+            },
+            {
+                when: row => row.status === 'paid',
+                style: {
+                    fontWeight: 'bold',
+                    color: 'green'
+                }
+            },
+            {
+                when: row => row.status === 'due',
+                style: {
+                    fontWeight: 'bold',
+                    color: 'blue'
                 }
             },
         ]
     },
     {
         name: 'Due',
-        selector: row => row.due
+        selector: row => row.dueDate
     },
     {
         name: 'Date',
-        selector: row => row.date
+        selector: row => row.invoiceDate
     },
     {
         name: 'Number',
-        selector: row => row.number
+        selector: row => row.invoiceNo
     },
     {
         name: 'Customer',
-        selector: row => row.customer
+        selector: row => row.customerName
     },
     {
-        name: 'Amount Due',
-        selector: row => row.amountDue
+        name: 'Amount',
+        selector: row => '$' + row.total
     },
     {
         name: 'Actions',

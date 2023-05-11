@@ -4,6 +4,7 @@ import CustomInput from '../../components/custom-input.component'
 import { useState } from 'react'
 import API from '../../api/api'
 import axios from 'axios'
+import {errorNotify} from '../../utils/success-notify.util'
 
 export default function Login(props) {
     const navigation = useNavigate()
@@ -11,6 +12,7 @@ export default function Login(props) {
     const [password, setPassword] = useState('')
     const submit = async () => {
         try {
+            if(!email || !password) return errorNotify('Email and password are required')
             const { data } = await axios.post(API.LOGIN, {
                 email, password
             })
@@ -23,6 +25,7 @@ export default function Login(props) {
         } catch (err) {
             console.log(err)
             console.log(err.response.data)
+            errorNotify(err.response.data.message)
         }
     }
     return (
@@ -44,8 +47,8 @@ export default function Login(props) {
             <div className='flex flex-col space-y-8 items-center justify-center lg:w-1/2 w-full p-4 lg:p-0'>
                 <img src={require('../../assets/images/logo.png')} alt='' />
                 <h3 className='font-bold text-4xl'>Login</h3>
-                <CustomInput placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
-                <CustomInput placeholder='Password' onChange={(e) => setPassword(e.target.value)} type='password' />
+                <CustomInput value={email} placeholder='Email' onChange={(e) => setEmail(e.target.value)} />
+                <CustomInput value={password} placeholder='Password' onChange={(e) => setPassword(e.target.value)} type='password' />
 
                 <div className='flex justify-between w-full xl:w-1/2'>
                     <div className='flex items-center'>

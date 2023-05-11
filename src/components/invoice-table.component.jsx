@@ -1,22 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Popup from 'reactjs-popup';
 import './custom-modal/custom-modal.css'
 import CustomInput from "./custom-input.component";
 import CustomButton from "./custom-button.component";
 
-const InvoiceTable = ({vehicles}) => {
-  const [selectedCar, setSelectedCar] = useState()
+const InvoiceTable = ({ vehicles, items, setItems, total, setTotal }) => {
+  const [selectedCar, setSelectedCar] = useState(null)
   const [days, setDays] = useState(0)
-  const [items, setItems] = useState([]);
-  // const [total, setTotal] = useState(0);
 
-  console.log('selected', selectedCar)
-
-  const handleAddRow = () => {
+  const handleAddRow = (close) => {
     const id = items.length + 1;
-    if(selectedCar.length < 1) return
-    const newItems = [...items, { id, item: selectedCar, days: days, price: 0 }];
+    if (!selectedCar) return
+    const newItems = [...items, { id, item: selectedCar, days: days, price: selectedCar.price.pricePerDay * days }];
     setItems(newItems);
+
+    setSelectedCar(null)
+    setDays(0)
+    close()
   };
 
   const handleDeleteRow = (id) => {
@@ -35,14 +35,21 @@ const InvoiceTable = ({vehicles}) => {
   //   setItems(updatedItems);
   // };
 
-  // const calculateTotal = () => {
-  //   const total = items.reduce((acc, item) => acc + item.amount, 0);
-  //   setTotal(total);
-  // };
+  const calculateTotal = () => {
+    console.log(items[0])
+    const total = items.reduce((acc, item) => acc + item.price, 0);
+    setTotal(total);
+  };
 
   const onSelectChange = e => {
-    setSelectedCar(e.target.value)
+    const foundVehicle = vehicles.find(vehicle => vehicle._id === e.target.value)
+    setSelectedCar(foundVehicle)
   }
+
+  useEffect(() => {
+    calculateTotal()
+  }, [items])
+
 
   return (
     <>
@@ -57,16 +64,16 @@ const InvoiceTable = ({vehicles}) => {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
+            {items?.map((item) => (
               <tr key={item.id} className="text-center p-2">
                 <td>
-                  {item.item}
+                  {item.item.name}
                 </td>
                 <td>
                   {item.days}
                 </td>
                 <td>
-                  4400$
+                  {item.price}
                 </td>
                 <td>
                   {items.length > 0 && (
@@ -88,19 +95,19 @@ const InvoiceTable = ({vehicles}) => {
                     </button>
                     <div className="header">Create Invoice</div>
                     <div className="content">
-                      <select value={selectedCar} onChange={onSelectChange} className="rounded-md outline-none border-2 bg-white border-[#FEBD20] my-4 mx-2 px-3 py-3 w-full xl:w-[300px] text-sm">
+                      <select defaultValue="" onChange={onSelectChange} className="rounded-md outline-none border-2 bg-white border-[#FEBD20] my-4 mx-2 px-3 py-3 w-full xl:w-[300px] text-sm">
                         <option value="" selected hidden>Select Car</option>
                         {vehicles.map(vehicle => {
-                
                           return (
-                          <option value={vehicle.name}>{vehicle.name}</option>
-                        )})}
+                            <option value={vehicle._id}>{vehicle.name}</option>
+                          )
+                        })}
                       </select>
                       <CustomInput placeholder='Days' type='number' onChange={(e) => setDays(e.target.value)} />
-                      <span className="font-bold text-lg">Total: $4400</span>
+                      <span className="font-bold text-lg">Total: ${selectedCar?.price.pricePerDay * days || 0}</span>
                     </div>
                     <div className="actions">
-                      <CustomButton onClick={() => handleAddRow()}>Submit</CustomButton>
+                      <CustomButton onClick={() => handleAddRow(close)}>Submit</CustomButton>
                     </div>
                   </div>
                 )}
@@ -110,7 +117,7 @@ const InvoiceTable = ({vehicles}) => {
           </tbody>
         </table>
       </div>
-      <p className="text-end font-bold mt-4">Total: $4400</p>
+      <p className="text-end font-bold mt-4">Total: ${total}</p>
     </>
   );
 };

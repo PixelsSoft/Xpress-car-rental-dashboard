@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-// import Login from "./pages/auth/login.page"
+import Login from "./pages/auth/login.page"
 import Dashboard from "./pages/dashboard.page"
 import User from "./pages/user/user.page"
 import RentedVehicles from './pages/registered-vehicles/rengistered-vehicles.page'
@@ -11,29 +11,46 @@ import Transactions from "./pages/transactions/transactions.page"
 import UserProfile from "./pages/user/user-profile.page"
 import RegisteredVehicleProfile from "./pages/registered-vehicles/registered-vehicle-profile.page"
 import AddCard from "./pages/transactions/add-card.component"
-// import ProtectedRoutes from "./components/private-routes.component"
+import ProtectedRoutes from "./components/private-routes.component"
 import CreateInvoice from "./pages/sales-and-payments/sub-menu/create-invoice.page"
+
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function App() {
   return (
-    <Router>
-      <Routes>
-        {/* <Route path='/' element={<Login />} />
-        <Route element={<ProtectedRoutes />}> */}
-          <Route path='/' element={<Dashboard />} />
-          <Route path='/sales-and-payments' element={<SalesAndPayments />} />
-          <Route path='/users' element={<User />} />
-          <Route path='/registered-vehicles' element={<RentedVehicles />} />
-          <Route path='/settings' element={<Settings />} />
-          <Route path='/add-vehicle' element={<AddVehicle />} />
-          <Route path='/invoicing' element={<Invoicing />} />
-          <Route path='/transactions' element={<Transactions />} />
-          <Route path='/user-profile' element={<UserProfile />} />
-          <Route path='/vehicle-profile' element={<RegisteredVehicleProfile />} />
-          <Route path='/add-card' element={<AddCard />} />
-          <Route path='/create-invoice' element={<CreateInvoice />} />
-        {/* </Route> */}
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Routes>
+          <Route path='/' element={<Login />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path='/dashboard' element={<Dashboard />} />
+            <Route path='/sales-and-payments' element={<SalesAndPayments />} />
+            <Route path='/users' element={<User />} />
+            <Route path='/registered-vehicles' element={<RentedVehicles />} />
+            <Route path='/settings' element={<Settings />} />
+            <Route path='/add-vehicle' element={<AddVehicle />} />
+            <Route path='/invoicing' element={<Invoicing />} />
+            <Route path='/transactions' element={<Transactions />} />
+            <Route path='/user-profile' element={<UserProfile />} />
+            <Route path='/vehicle-profile' element={<RegisteredVehicleProfile />} />
+            <Route path='/add-card' element={<AddCard />} />
+            <Route path='/create-invoice' element={<CreateInvoice />} />
+          </Route>
+        </Routes>
+      </Router>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
+    </>
   )
 }
