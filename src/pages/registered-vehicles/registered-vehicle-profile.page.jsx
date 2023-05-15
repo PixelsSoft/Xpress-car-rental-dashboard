@@ -86,9 +86,9 @@ export default function RegisteredVehicleProfile() {
 
         getVehicleData()
         getRentingHistory()
-    }, [])
+    }, [id])
 
-    console.log(rentingHistory)
+    console.log(images, description)
     return (
         <Layout>
             <CustomContainer>
@@ -108,11 +108,11 @@ export default function RegisteredVehicleProfile() {
                                     </button>
                                     <div className="header">Vehicle # {id}</div>
                                     <div className="content flex flex-col">
-                                        <CustomInput placeholder='Vehicle Name' />
-                                        <CustomInput placeholder='Registration #' />
-                                        <CustomInput placeholder='Vehicle Type' />
-                                        <CustomInput placeholder='Renting Price / Day' />
-                                        <CustomInput placeholder='Capacity' />
+                                        <CustomInput value={name} placeholder='Vehicle Name' />
+                                        <CustomInput value={registrationNo} placeholder='Registration #' />
+                                        <CustomInput value={type} placeholder='Vehicle Type' />
+                                        <CustomInput value={price} placeholder='Renting Price / Day' />
+                                        <CustomInput value={capacity} placeholder='Capacity' />
                                     </div>
                                     <div className="actions flex justify-evenly">
                                         <CustomButton>Save Changes</CustomButton>

@@ -1,4 +1,4 @@
-const BASE_URL = 'https://xpress-rental.onrender.com'
+const BASE_URL = 'http://localhost:8001'
 const API = {
     
     LOGIN: `${BASE_URL}/auth/login`,
@@ -10,7 +10,7 @@ const API = {
 
     ADD_VEHICLE: `${BASE_URL}/cars/add`,
     GET_VEHICLES: `${BASE_URL}/cars`,
-    GET_TOTAL_VEHICLES: `${BASE_URL}/cars/total`,
+    GET_TOTAL_VEHICLES_COUNT: `${BASE_URL}/cars/total`,
 
     ADD_EXPENSE: `${BASE_URL}/expenses/add`,
     DELETE_EXPENSE: `${BASE_URL}/expenses/`,

@@ -13,11 +13,12 @@ import API from '../api/api'
 export default function Dashboard() {
     const [totalAmount, setTotalAmount] = useState(0)
     const [totalCars, setTotalCars] = useState(0)
+
+    console.log(API.GET_TOTAL_VEHICLES_COUNT)
     useEffect(() => {
         const getTotalAmount = async() => {
             try {
                 const response = await axios.get(API.GET_INVOICE_TOTAL)
-                console.log(response)
                 setTotalAmount(response.data.data)
             } catch (err) {
                 console.log(err)
@@ -25,11 +26,15 @@ export default function Dashboard() {
         }
 
         const getTotalCars = async () => {
+            console.log('hello')
             try {
-                const response = await axios.get(API.GET_TOTAL_VEHICLES)
+                const response = await axios.get(API.GET_TOTAL_VEHICLES_COUNT)
+                console.log(response)
                 setTotalCars(response.data.data)
             } catch (err) {
-                console.log(err)
+                console.log(err.message)
+                console.log(err.response.data.message)
+                console.log(err.stack)
             }
         }
 
