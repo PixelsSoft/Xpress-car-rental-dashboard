@@ -18,6 +18,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Expense from "./pages/expense/expense.page"
 import AddExpense from "./pages/expense/add-expense.page"
+import AddUser from "./pages/user/add-user.page"
 
 export default function App() {
   return (
@@ -40,6 +41,7 @@ export default function App() {
             <Route path='/create-invoice' element={<CreateInvoice />} />
             <Route path='/expenses' element={<Expense />} />
             <Route path='/add-expense' element={<AddExpense />} />
+            <Route path='/add-user' element={<AddUser />} />
           </Route>
         </Routes>
       </Router>

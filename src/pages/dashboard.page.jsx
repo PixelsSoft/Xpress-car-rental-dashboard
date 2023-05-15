@@ -5,7 +5,7 @@ import BarChart from '../components/line-chart.component'
 import CustomTable from '../components/custom-table/custom-table.component'
 import { rentedVehicleInfoTableColumns } from '../config/columns'
 import { rentedVehicleInfoData } from '../config/table-data'
-import RentRequestCard from '../components/renting-request-card.component'
+// import RentRequestCard from '../components/renting-request-card.component'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import API from '../api/api'
@@ -15,34 +15,43 @@ export default function Dashboard() {
     const [totalAmount, setTotalAmount] = useState(0)
     const [totalCars, setTotalCars] = useState(0)
     const [totalExpense, setTotalExpense] = useState(0)
+    const [loading, setLoading] = useState(false)
 
-    console.log(API.GET_TOTAL_VEHICLES_COUNT)
     useEffect(() => {
         const getTotalAmount = async() => {
             try {
+                setLoading(true)
                 const response = await axios.get(API.GET_INVOICE_TOTAL)
                 setTotalAmount(response.data.data)
+                setLoading(false)
             } catch (err) {
                 errorNotify(err.response.data.message)
+                setLoading(false)
             }
         }
 
         const getTotalCars = async () => {
-            console.log('hello')
+            
             try {
+                setLoading(true)
                 const response = await axios.get(API.GET_TOTAL_VEHICLES_COUNT)
                 setTotalCars(response.data.data)
+                setLoading(false)
             } catch (err) {
                 errorNotify(err.response.data.message)
+                setLoading(false)
             }
         }
 
         const getTotalExpenseAmount = async() => {
             try {
+                setLoading(true)
                 const response = await axios.get(API.GET_EXPENSES_TOTAL)
                 setTotalExpense(response.data.data)
+                setLoading(false)
             } catch (err) {
                 errorNotify(err.response.data.message)
+                setLoading(false)
             }
         } 
         getTotalAmount()
@@ -53,9 +62,9 @@ export default function Dashboard() {
         <Layout>
             <CustomContainer otherStyles='lg:grid lg:grid-cols-4 mt-6 lg:divide-x'>
                 <StatCard  title='Cars On Rent' img={require('../assets/images/car-rent.png')} stat={20}/>
-                <StatCard  title='Total Amount' img={require('../assets/icons/edit.png')} stat={'$' + totalAmount}/>
-                <StatCard  title='Registered Cars' img={require('../assets/icons/car-rental.png')} stat={totalCars}/>
-                <StatCard  title='Total Expenses' img={require('../assets/icons/payment.png')} stat={'$' + totalExpense}/>
+                <StatCard  title='Total Amount' img={require('../assets/icons/edit.png')} stat={'$' + totalAmount} loading={loading}/>
+                <StatCard  title='Registered Cars' img={require('../assets/icons/car-rental.png')} stat={totalCars} loading={loading}/>
+                <StatCard  title='Total Expenses' img={require('../assets/icons/payment.png')} stat={'$' + totalExpense} loading={loading}/>
                 
             </CustomContainer>
 
@@ -67,7 +76,7 @@ export default function Dashboard() {
             </CustomContainer>
 
             <CustomContainer otherStyles='mt-10 p-4 w-full flex flex-col xl:flex-row space-x-2'>
-                <div className='w-full xl:w-8/12'>
+                <div className='w-full'>
                     <div className='flex items-center w-full justify-between'>
                         <div className='flex items-center space-x-3'>
                             <img src={require('../assets/icons/car-side-icon.png')} alt='' />
@@ -81,7 +90,7 @@ export default function Dashboard() {
                     </div>
                 </div>
 
-                <div className='w-full xl:w-4/12 bg-white p-3 mt-10 xl:mt-0'>
+                {/* <div className='w-full xl:w-4/12 bg-white p-3 mt-10 xl:mt-0'>
                     <div className='flex items-center mb-4 justify-between'>
                         <div className='flex items-center'>
                             <img src={require('../assets/icons/car-front.png')} alt='' />
@@ -92,7 +101,7 @@ export default function Dashboard() {
                     <RentRequestCard />
                     <RentRequestCard />
                     <RentRequestCard />
-                </div>
+                </div> */}
             </CustomContainer>
         </Layout>
     )

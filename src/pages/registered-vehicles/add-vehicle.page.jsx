@@ -7,6 +7,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import { errorNotify, successNotify } from '../../utils/success-notify.util'
 import API from '../../api/api'
+import { useNavigate } from 'react-router-dom'
 
 export default function AddVehicle() {
     const [name, setName] = useState('')
@@ -19,7 +20,14 @@ export default function AddVehicle() {
     const [capacity, setCapacity] = useState()
     const [loading, setLoading] = useState(false)
 
+    const navigate = useNavigate()
+
     let token = JSON.parse(localStorage.getItem('@user_details')).token
+
+    const onCancel = (e) => {
+        e.preventDefault()
+        navigate('/registered-vehicles')
+    }
 
     const addVehicleSubmit = async (e) => {
         try {
@@ -95,7 +103,7 @@ export default function AddVehicle() {
                         </div>
 
                         <div className='flex space-x-3 ml-4 mt-10'>
-                            <CustomButton>Cancel</CustomButton>
+                            <CustomButton onClick={onCancel}>Cancel</CustomButton>
                             <CustomButton type='submit' loading={loading}>Add Vehicle</CustomButton>
                         </div>
                     </form>

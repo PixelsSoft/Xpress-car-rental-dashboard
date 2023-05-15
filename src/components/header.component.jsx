@@ -1,6 +1,14 @@
 import YellowText from '../components/YellowText.component'
+import { useState, useEffect } from 'react'
 
 export default function Header() {
+    const [user, setUser] = useState({
+        fullName: ''
+    })
+
+    useEffect(() => {
+        setUser(JSON.parse(localStorage.getItem('@user_details')).user)
+    }, [])
     return (
         <div className='w-full flex items-center justify-between'>
             <div className='flex flex-col ml-[100px] md:ml-0'>
@@ -20,12 +28,12 @@ export default function Header() {
                 </div>
 
                 <div className='flex items-center space-x-2'>
-                    <div className='border-2 border-[#FEBD20] rounded-xl h-[60px] w-[60px]'>
+                    <img className='border-2 border-[#FEBD20] rounded-xl h-[60px] w-[60px]' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT16eO5W8VPjVFrkvG8n_2FQKjByMcbLtBF4A&usqp=CAU'>
 
-                    </div>
+                    </img>
                     <div className='flex flex-col'>
                         <YellowText>Hi</YellowText>
-                        <span>Edward!</span>
+                        <span>{user.fullName.split(' ')[0]}!</span>
                     </div>
                 </div>
             </div>

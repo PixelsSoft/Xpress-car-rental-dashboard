@@ -1,13 +1,18 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import { MdKeyboardArrowDown } from 'react-icons/md'
 import { FaBars } from 'react-icons/fa'
 
 export default function Menu() {
     const [openMenu, setOpenMenu] = useState(false)
-
     const [userSubMenuOpen, setUserSubMenuOpen] = useState(false)
     const [salesAndPaymentsSubMenu, setSalesAndPaymentsSubMenu] = useState(false)
+
+    const navigate = useNavigate()
+    const logout = () => {
+        localStorage.clear()
+        navigate('/')
+    }
 
     const menus = [
         { id: 1, title: 'Dashboard', icon: require('../assets/icons/dashboard-icon.png'), to: '/dashboard' },
@@ -98,7 +103,7 @@ export default function Menu() {
                             </>
                         ))}
                     </ul>
-                    <img src={require('../assets/icons/logout-icon.png')} alt='' className='cursor-pointer' />
+                    <img src={require('../assets/icons/logout-icon.png')} alt='' className='cursor-pointer' onClick={logout} />
                 </div>
             </div>
         </>

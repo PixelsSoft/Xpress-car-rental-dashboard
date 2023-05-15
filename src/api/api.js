@@ -1,7 +1,11 @@
-const BASE_URL = 'https://xpress-rental.onrender.com'
+// const BASE_URL = 'https://xpress-rental.onrender.com'
+const BASE_URL = 'http://localhost:8001'
 const API = {
     
     LOGIN: `${BASE_URL}/auth/login`,
+    GET_USER_DETAILS: `${BASE_URL}/auth/get-profile`,
+    CHANGE_PASSWORD: `${BASE_URL}/auth/change-password`,
+    EDIT_PROFILE: `${BASE_URL}/auth/edit-profile`,
     
     CREATE_INVOICE: `${BASE_URL}/invoice/create`,
     GET_INVOICES: `${BASE_URL}/invoices`,

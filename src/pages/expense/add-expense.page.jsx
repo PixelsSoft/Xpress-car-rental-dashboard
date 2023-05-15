@@ -8,6 +8,7 @@ import ExpenseCard from '../../components/expense-card.component'
 import axios from "axios";
 import { errorNotify, successNotify } from '../../utils/success-notify.util'
 import API from "../../api/api";
+import { useNavigate } from "react-router-dom";
 
 const AddExpense = () => {
     const [title, setTitle] = useState('')
@@ -17,9 +18,12 @@ const AddExpense = () => {
     const [date, setDate] = useState('')
     const [loading, setLoading] = useState(false)
 
+    const navigate = useNavigate()
+
     const onSubmit = async e => {
         e.preventDefault()
         try {
+            if(!title || !type || !amount || !description || !date) return errorNotify('All fields are required')
             await axios.post(API.ADD_EXPENSE, {
                 title, type, amount, description, date
             })
@@ -37,6 +41,11 @@ const AddExpense = () => {
             errorNotify(err.response.data.message)
             setLoading(false)
         }
+    }
+
+    const onCancel = (e) => {
+        e.preventDefault()
+        navigate('/expenses')
     }
 
 
@@ -69,7 +78,7 @@ const AddExpense = () => {
                     </div>
 
                     <div className='flex space-x-3 ml-4 mt-10'>
-                        <CustomButton>Cancel</CustomButton>
+                        <CustomButton onClick={onCancel}>Cancel</CustomButton>
                         <CustomButton loading={loading} type='submit'>Add Expense</CustomButton>
                     </div>
                 </form>
