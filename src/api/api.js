@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8001'
+const BASE_URL = 'https://xpress-rental.onrender.com'
 const API = {
     
     LOGIN: `${BASE_URL}/auth/login`,
