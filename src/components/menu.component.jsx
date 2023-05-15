@@ -35,7 +35,8 @@ export default function Menu() {
         },
         { id: 4, title: 'Registered Vehicles', icon: require('../assets/icons/car-icon.png'), to: '/registered-vehicles' },
         { id: 5, title: 'Settings', icon: require('../assets/icons/setting-icon.png'), to: '/settings' },
-        { id: 6, title: 'Transactions', icon: require('../assets/icons/card-tick.png'), to: '/transactions' }
+        // { id: 6, title: 'Transactions', icon: require('../assets/icons/card-tick.png'), to: '/transactions' },
+        { id: 7, title: 'Expenses', icon: require('../assets/icons/expense-icon.png'), to: '/expenses' }
     ]
 
     const toggleMenu = () => setOpenMenu(!openMenu)
@@ -97,7 +98,7 @@ export default function Menu() {
                             </>
                         ))}
                     </ul>
-                    <img src={require('../assets/icons/logout-icon.png')} alt='' className='cursor-pointer'/>
+                    <img src={require('../assets/icons/logout-icon.png')} alt='' className='cursor-pointer' />
                 </div>
             </div>
         </>

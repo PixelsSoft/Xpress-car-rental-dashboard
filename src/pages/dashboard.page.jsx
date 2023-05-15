@@ -6,15 +6,42 @@ import CustomTable from '../components/custom-table/custom-table.component'
 import { rentedVehicleInfoTableColumns } from '../config/columns'
 import { rentedVehicleInfoData } from '../config/table-data'
 import RentRequestCard from '../components/renting-request-card.component'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import API from '../api/api'
 
 export default function Dashboard() {
+    const [totalAmount, setTotalAmount] = useState(0)
+    const [totalCars, setTotalCars] = useState(0)
+    useEffect(() => {
+        const getTotalAmount = async() => {
+            try {
+                const response = await axios.get(API.GET_INVOICE_TOTAL)
+                console.log(response)
+                setTotalAmount(response.data.data)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        const getTotalCars = async () => {
+            try {
+                const response = await axios.get(API.GET_TOTAL_VEHICLES)
+                setTotalCars(response.data.data)
+            } catch (err) {
+                console.log(err)
+            }
+        }
+
+        getTotalAmount()
+        getTotalCars()
+    }, [])
     return (
         <Layout>
-
             <CustomContainer otherStyles='lg:grid lg:grid-cols-4 mt-6 lg:divide-x'>
                 <StatCard  title='Cars On Rent' img={require('../assets/images/car-rent.png')} stat={20}/>
-                <StatCard  title='Total Amount' img={require('../assets/icons/edit.png')} stat={'$' + 202323}/>
-                <StatCard  title='Registered Cars' img={require('../assets/icons/car-rental.png')} stat={53}/>
+                <StatCard  title='Total Amount' img={require('../assets/icons/edit.png')} stat={'$' + totalAmount}/>
+                <StatCard  title='Registered Cars' img={require('../assets/icons/car-rental.png')} stat={totalCars}/>
                 <StatCard  title='Pending Amount' img={require('../assets/icons/payment.png')} stat={'$' + 3233}/>
                 
             </CustomContainer>

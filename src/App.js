@@ -16,6 +16,8 @@ import CreateInvoice from "./pages/sales-and-payments/sub-menu/create-invoice.pa
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Expense from "./pages/expense/expense.page"
+import AddExpense from "./pages/expense/add-expense.page"
 
 export default function App() {
   return (
@@ -33,22 +35,25 @@ export default function App() {
             <Route path='/invoicing' element={<Invoicing />} />
             <Route path='/transactions' element={<Transactions />} />
             <Route path='/user-profile' element={<UserProfile />} />
-            <Route path='/vehicle-profile' element={<RegisteredVehicleProfile />} />
+            <Route path='/vehicle-profile/:id' element={<RegisteredVehicleProfile />} />
             <Route path='/add-card' element={<AddCard />} />
             <Route path='/create-invoice' element={<CreateInvoice />} />
+            <Route path='/expenses' element={<Expense />} />
+            <Route path='/add-expense' element={<AddExpense />} />
           </Route>
         </Routes>
       </Router>
       <ToastContainer
         position="bottom-center"
-        autoClose={5000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
         rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
+        limit={1}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
         theme="light"
       />
     </>

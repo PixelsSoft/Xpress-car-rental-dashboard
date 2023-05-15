@@ -7,8 +7,9 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import API from '../../api/api'
+import {errorNotify, successNotify} from '../../utils/success-notify.util'
 
-export const CustomIndexCell = ({ rowIndex }) => <div>{rowIndex}</div>;
+export const CustomIndexCell = ({ rowIndex }) => <div>{rowIndex + 1}</div>;
 
 export default function RentedVehicles() {
     const [vehicles, setVehicles] = useState([])
@@ -23,6 +24,24 @@ export default function RentedVehicles() {
         } catch (err) { 
             console.log(err)
             setLoading(false)
+        }
+    }
+
+    const handleDelete = async (id) => {
+        try {
+            const response = await axios.delete(API.DELETE_VEHICLE_PROFILE + id)
+
+            if(response.data.success) {
+                setVehicles(prevState => (
+                    prevState.filter(vehicle => vehicle._id !== id)
+                ))
+                successNotify(response.data.message)
+            }
+            setLoading(false)
+        } catch (err) {
+            console.log(err)
+            setLoading(false)
+            errorNotify(err.message)
         }
     }
 
@@ -50,7 +69,7 @@ export default function RentedVehicles() {
                 </div>
             </div>
             <CustomContainer>
-                <CustomTable loading={loading} columns={registeredVehiclesColumns} data={vehicles} />
+                <CustomTable loading={loading} columns={registeredVehiclesColumns(handleDelete)} data={vehicles} />
             </CustomContainer>
         </Layout>
     )

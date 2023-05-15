@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import API from '../../../api/api'
 import { useEffect, useState, useCallback } from "react";
-import {errorNotify} from '../../../utils/success-notify.util'
+import {errorNotify, successNotify} from '../../../utils/success-notify.util'
 
 export default function Invoicing() {
     const [invoices, setInvoices] = useState([])
@@ -19,6 +19,26 @@ export default function Invoicing() {
     // const [averageTimeToGetPaid, setAverageTimeToGetPaid] = useState(0)
     const [upcomingPayouts, setUpcomingPayouts] = useState(0)
     const [loading, setLoading] = useState(false)
+
+    const deleteInvoice = async(id) => {
+      try {
+        setLoading(true)
+        const response = await axios.delete(API.DELETE_INVOICE + id)
+
+        if(response.data.success) {
+          setInvoices(prevState => (
+            prevState.filter(invoice => invoice._id !== id)
+          ))
+
+          successNotify(response.data.message)
+        }
+        setLoading(false)
+      } catch (err) {
+        setLoading(false)
+        errorNotify(err.message)
+        console.log(err)
+      }
+    }
 
     const calculateStats = useCallback(() => {
         setOverdue(
@@ -80,13 +100,13 @@ export default function Invoicing() {
                         <CustomInput placeholder='All Statuses' />
                         <CustomInput placeholder='From' />
                         <CustomInput placeholder='To' />
-                        <CustomInput placeholder='Enter Invoice #' />
+                        <CustomInput placeholder='Invoice #' />
                     </div>
                 </div>
                 <div className="mb-10">
                     <CustomBreadcumb filters={['Unpaid', 'Draft', 'All Invoices']} />
                 </div>
-                <CustomTable loading={loading} columns={invoicesColumns} data={invoices} />
+                <CustomTable loading={loading} columns={invoicesColumns(deleteInvoice)} data={invoices} />
             </CustomContainer>
         </Layout>
     )
