@@ -18,7 +18,7 @@ const API = {
     GET_EXPENSES: `${BASE_URL}/expenses`,
     GET_EXPENSES_TOTAL: `${BASE_URL}/expense-total`,
 
-    DELETE_VEHICLE_PROFILE: `${BASE_URL}/cars`,
+    DELETE_VEHICLE_PROFILE: `${BASE_URL}/cars/`,
     GET_VEHICLE_DATA: `${BASE_URL}/cars/`,
 
     GET_RENTING_HISTORY: `${BASE_URL}/invoices/history/`,
