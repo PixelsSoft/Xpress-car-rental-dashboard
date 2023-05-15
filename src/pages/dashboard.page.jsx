@@ -9,10 +9,12 @@ import RentRequestCard from '../components/renting-request-card.component'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import API from '../api/api'
+import { errorNotify } from '../utils/success-notify.util'
 
 export default function Dashboard() {
     const [totalAmount, setTotalAmount] = useState(0)
     const [totalCars, setTotalCars] = useState(0)
+    const [totalExpense, setTotalExpense] = useState(0)
 
     console.log(API.GET_TOTAL_VEHICLES_COUNT)
     useEffect(() => {
@@ -21,7 +23,7 @@ export default function Dashboard() {
                 const response = await axios.get(API.GET_INVOICE_TOTAL)
                 setTotalAmount(response.data.data)
             } catch (err) {
-                console.log(err)
+                errorNotify(err.response.data.message)
             }
         }
 
@@ -29,17 +31,23 @@ export default function Dashboard() {
             console.log('hello')
             try {
                 const response = await axios.get(API.GET_TOTAL_VEHICLES_COUNT)
-                console.log(response)
                 setTotalCars(response.data.data)
             } catch (err) {
-                console.log(err.message)
-                console.log(err.response.data.message)
-                console.log(err.stack)
+                errorNotify(err.response.data.message)
             }
         }
 
+        const getTotalExpenseAmount = async() => {
+            try {
+                const response = await axios.get(API.GET_EXPENSES_TOTAL)
+                setTotalExpense(response.data.data)
+            } catch (err) {
+                errorNotify(err.response.data.message)
+            }
+        } 
         getTotalAmount()
         getTotalCars()
+        getTotalExpenseAmount()
     }, [])
     return (
         <Layout>
@@ -47,7 +55,7 @@ export default function Dashboard() {
                 <StatCard  title='Cars On Rent' img={require('../assets/images/car-rent.png')} stat={20}/>
                 <StatCard  title='Total Amount' img={require('../assets/icons/edit.png')} stat={'$' + totalAmount}/>
                 <StatCard  title='Registered Cars' img={require('../assets/icons/car-rental.png')} stat={totalCars}/>
-                <StatCard  title='Pending Amount' img={require('../assets/icons/payment.png')} stat={'$' + 3233}/>
+                <StatCard  title='Total Expenses' img={require('../assets/icons/payment.png')} stat={'$' + totalExpense}/>
                 
             </CustomContainer>
 

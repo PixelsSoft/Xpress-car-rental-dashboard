@@ -34,7 +34,8 @@ const AddExpense = () => {
             setLoading(false)
         } catch (err) {
             console.log(err)
-            errorNotify(err.message)
+            errorNotify(err.response.data.message)
+            setLoading(false)
         }
     }
 

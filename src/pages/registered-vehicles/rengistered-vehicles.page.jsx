@@ -22,7 +22,7 @@ export default function RentedVehicles() {
             setVehicles(response.data.data)
             setLoading(false)
         } catch (err) { 
-            console.log(err)
+            errorNotify(err.response.data.message)
             setLoading(false)
         }
     }
@@ -41,7 +41,7 @@ export default function RentedVehicles() {
         } catch (err) {
             console.log(err)
             setLoading(false)
-            errorNotify(err.message)
+            errorNotify(err.response.data.message)
         }
     }
 

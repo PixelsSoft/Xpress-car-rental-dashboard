@@ -10,6 +10,7 @@ import axios from 'axios'
 import Popup from 'reactjs-popup'
 import CustomInput from '../../components/custom-input.component'
 import API from '../../api/api'
+import { errorNotify } from '../../utils/success-notify.util'
 
 export default function RegisteredVehicleProfile() {
     const { id } = useParams()
@@ -42,7 +43,7 @@ export default function RegisteredVehicleProfile() {
                 navigate('/registered-vehicles')
             }
         } catch (err) {
-            console.log(err)
+            errorNotify(err.response.data.message)
         }
     }
 
@@ -53,6 +54,7 @@ export default function RegisteredVehicleProfile() {
                 setRentingHistory(response.data.data)
             } catch(err) {
                 console.log(err)
+                errorNotify(err.response.data.message)
             }
         }
         const getVehicleData = async () => {
@@ -80,7 +82,7 @@ export default function RegisteredVehicleProfile() {
                     setRegistrationNo(registrationNo)
                 }
             } catch (err) {
-                console.log(err)
+               errorNotify(err.response.data.message)
             }
         }
 

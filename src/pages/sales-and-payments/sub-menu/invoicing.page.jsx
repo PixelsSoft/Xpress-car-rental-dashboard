@@ -35,7 +35,7 @@ export default function Invoicing() {
         setLoading(false)
       } catch (err) {
         setLoading(false)
-        errorNotify(err.message)
+        errorNotify(err.response.data.message)
         console.log(err)
       }
     }
@@ -60,7 +60,7 @@ export default function Invoicing() {
           setInvoices(response.data.data)
           setLoading(false)
         } catch (err) {
-          errorNotify(err.message)
+          errorNotify(err.response.data.message)
           setLoading(false)
         }
       }, [setInvoices, setLoading])

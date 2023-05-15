@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 import { expensesColumns } from '../../config/columns'
 import API from '../../api/api'
+import { errorNotify } from '../../utils/success-notify.util'
 
 const Expense = () => {
     const [expenses, setExpenses] = useState([])
@@ -26,8 +27,8 @@ const Expense = () => {
             }
             setLoading(false)
         } catch (err) {
+            errorNotify(err.response.data.message)
             setLoading(false)
-            console.log(err)
         }
     }
     useEffect(() => {
@@ -53,6 +54,7 @@ const Expense = () => {
             }
         } catch (err) {
             console.log(err)
+            errorNotify(err.response.data.message)
         }
     }
 
@@ -67,7 +69,7 @@ const Expense = () => {
             }
             setLoading(false)
         } catch (err) {
-            console.log(err)
+            errorNotify(err.response.data.message)
             setLoading(false)
         }
     }

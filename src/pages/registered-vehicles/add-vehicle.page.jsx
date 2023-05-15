@@ -63,7 +63,7 @@ export default function AddVehicle() {
             
             setLoading(false)
         } catch (err) {
-            errorNotify(err.message)
+            errorNotify(err.response.data.message)
             setLoading(false)
         }
     }

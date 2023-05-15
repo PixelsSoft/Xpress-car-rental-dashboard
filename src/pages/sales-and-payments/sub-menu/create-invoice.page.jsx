@@ -31,6 +31,7 @@ export default function CreateInvoice() {
             setVehicles(response.data.data)
         } catch (err) {
             console.log(err)
+            errorNotify(err.response.data.message)
         }
     }
 
