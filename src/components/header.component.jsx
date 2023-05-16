@@ -28,7 +28,7 @@ export default function Header() {
                 </div>
 
                 <div className='flex items-center space-x-2'>
-                    <img className='border-2 border-[#FEBD20] rounded-xl h-[60px] w-[60px]' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT16eO5W8VPjVFrkvG8n_2FQKjByMcbLtBF4A&usqp=CAU'>
+                    <img className='border-2 border-[#FEBD20] rounded-xl h-[60px] w-[60px]' alt='' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT16eO5W8VPjVFrkvG8n_2FQKjByMcbLtBF4A&usqp=CAU'>
 
                     </img>
                     <div className='flex flex-col'>

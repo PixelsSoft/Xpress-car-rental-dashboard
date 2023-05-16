@@ -13,9 +13,9 @@ export default function PasswordChange() {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [loading, setLoading] = useState(false)
+    const [token, setToken] = useState('')
 
-    const token = JSON.parse(localStorage.getItem('@user_details')).token
-
+    
     useEffect(() => {
         const getUserDetails = async () => {
             try {
@@ -35,6 +35,8 @@ export default function PasswordChange() {
             }
         }
 
+        const jwt = JSON.parse(localStorage.getItem('@user_details')).token
+        setToken(jwt)
         getUserDetails()
     }, [])
 
