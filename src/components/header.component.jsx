@@ -3,12 +3,15 @@ import { useState, useEffect } from 'react'
 
 export default function Header() {
     const [user, setUser] = useState({
-        fullName: ''
+        fullName: '',
+        profilePicture: ''
     })
 
     useEffect(() => {
         setUser(JSON.parse(localStorage.getItem('@user_details')).user)
     }, [])
+
+    console.log(user)
     return (
         <div className='w-full flex items-center justify-between'>
             <div className='flex flex-col ml-[100px] md:ml-0'>
@@ -28,7 +31,7 @@ export default function Header() {
                 </div>
 
                 <div className='flex items-center space-x-2'>
-                    <img className='border-2 border-[#FEBD20] rounded-xl h-[60px] w-[60px]' alt='' src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT16eO5W8VPjVFrkvG8n_2FQKjByMcbLtBF4A&usqp=CAU'>
+                    <img className='border-2 border-[#FEBD20] rounded-xl h-[60px] w-[60px]' alt='' src={user.profilePicture.url}>
 
                     </img>
                     <div className='flex flex-col'>

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import CustomContainer from "../../components/custom-container.component";
 import Layout from "../../components/layout.component";
-import NotificationSetting from './notification-setting.page'
+// import NotificationSetting from './notification-setting.page'
 import ProfileSetting from "./profile-setting.page";
 import PasswordChange from './password-change.page';
 
 export default function Settings() {
-    const settingsMenu = ['Notification Setting', 'Profile Setting', 'Password Change', 'Terms & Condition', 'Privacy Policy']
+    const settingsMenu = ['Profile Setting', 'Password Change']
 
     const [selected, setSelected] = useState(0)
 
@@ -27,9 +27,9 @@ export default function Settings() {
                 </div>
 
                 <div className="ml-4 w-full p-4">
-                    {selected === 0 && <NotificationSetting />}
-                    {selected === 1 && <ProfileSetting />}
-                    {selected === 2 && <PasswordChange />}
+                    {/* {selected === 0 && <NotificationSetting />} */}
+                    {selected === 0 && <ProfileSetting />}
+                    {selected === 1 && <PasswordChange />}
                 </div>
 
             </CustomContainer>
