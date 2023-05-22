@@ -35,68 +35,42 @@ export const usersData = [
         address: 'ABC Street',
         registerDate: '12/03/23',
         status: 'active',
+        email: 'saad@test.com',
         paymentMethod: require('../assets/images/visa-card.png')
     },
     {
         sno: 2,
         userId: 123,
-        name: 'Saad',
+        name: 'Taimoor',
         contact: '0341-1231231',
         address: 'ABC Street',
         registerDate: '12/03/23',
         status: 'active',
+        email: 'taimoor@test.com',
         paymentMethod: require('../assets/images/visa-card.png')
     },
     {
         sno: 3,
         userId: 123,
-        name: 'Saad',
+        name: 'Huzaifa',
         contact: '0341-1231231',
         address: 'ABC Street',
         registerDate: '12/03/23',
         status: 'active',
+        email: 'huzaifa@test.com',
         paymentMethod: require('../assets/images/mastercard.png')
     },
     {
         sno: 4,
         userId: 123,
-        name: 'Saad',
+        name: 'Michael',
         contact: '0341-1231231',
         address: 'ABC Street',
         registerDate: '12/03/23',
         status: 'active',
+        email: 'michael@test.com',
         paymentMethod: require('../assets/images/visa-card.png')
-    },
-    {
-        sno: 5,
-        userId: 123,
-        name: 'Saad',
-        contact: '0341-1231231',
-        address: 'ABC Street',
-        registerDate: '12/03/23',
-        status: 'active',
-        paymentMethod: require('../assets/images/visa-card.png')
-    },
-    {
-        sno: 6,
-        userId: 123,
-        name: 'Saad',
-        contact: '0341-1231231',
-        address: 'ABC Street',
-        registerDate: '12/03/23',
-        status: 'active',
-        paymentMethod: require('../assets/images/visa-card.png')
-    },
-    {
-        sno: 7,
-        userId: 123,
-        name: 'Saad',
-        contact: '0341-1231231',
-        address: 'ABC Street',
-        registerDate: '12/03/23',
-        status: 'active',
-        paymentMethod: require('../assets/images/mastercard.png')
-    },
+    }
 ]
 
 export const vehiclesData = [

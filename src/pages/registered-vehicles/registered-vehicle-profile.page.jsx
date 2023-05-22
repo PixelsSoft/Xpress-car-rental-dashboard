@@ -113,7 +113,7 @@ export default function RegisteredVehicleProfile() {
                                         <CustomInput value={name} placeholder='Vehicle Name' />
                                         <CustomInput value={registrationNo} placeholder='Registration #' />
                                         <CustomInput value={type} placeholder='Vehicle Type' />
-                                        <CustomInput value={price} placeholder='Renting Price / Day' />
+                                        <CustomInput value={price.pricePerDay} placeholder='Renting Price / Day' />
                                         <CustomInput value={capacity} placeholder='Capacity' />
                                     </div>
                                     <div className="actions flex justify-evenly">

@@ -4,7 +4,7 @@ import CustomContainer from '../../../components/custom-container.component'
 import CustomInput from "../../../components/custom-input.component";
 import CustomButton from "../../../components/custom-button.component";
 import InvoiceTable from '../../../components/invoice-table.component'
-import CustomFileInput from '../../../components/custom-file-input/custom-file-input.component'
+import AddCustomerPopup from "../../../components/add-customer-popup.component";
 import axios from "axios";
 import API from '../../../api/api'
 import { v4 as uuidv4 } from 'uuid'
@@ -113,14 +113,8 @@ export default function CreateInvoice() {
                     </div>
 
                     <form className='w-full mt-6 flex justify-between'>
-                        <div className="flex flex-col items-center justify-center border-dotted w-[300px] border-gray-400 border-2 py-10 px-4 rounded-lg">
-                            <div className="flex items-center pb-4">
-                                <img src={require('../../../assets/icons/upload-pic.png')} alt='' />
-                                <span className="font-bold pl-2 w-fit text-sm">Add a customer</span>
-                            </div>
-                            <CustomFileInput />
-                        </div>
-                        <div className="w-full">
+                        <AddCustomerPopup setCustomerEmail={setCustomerEmail} setCustomerName={setCustomerName} />
+                        <div className="w-9/12">
                             <div className='flex w-full flex-wrap justify-end'>
                                 <CustomInput placeholder='Invoice #' value={invoiceNumber} disabled />
                                 <CustomInput placeholder='Customer Name' value={customerName} onChange={e => setCustomerName(e.target.value)} />

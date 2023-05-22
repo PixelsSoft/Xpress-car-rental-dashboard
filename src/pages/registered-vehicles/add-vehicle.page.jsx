@@ -3,7 +3,7 @@ import CustomContainer from '../../components/custom-container.component'
 import CustomInput from '../../components/custom-input.component'
 import CustomButton from '../../components/custom-button.component'
 import RecentlyAddedVehicleCard from '../../components/recently-added-vehicle-card.component'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { errorNotify, successNotify } from '../../utils/success-notify.util'
 import API from '../../api/api'
@@ -12,13 +12,14 @@ import { useNavigate } from 'react-router-dom'
 export default function AddVehicle() {
     const [name, setName] = useState('')
     const [registrationNumber, setRegistrationNumber] = useState('')
-    const [pricePerDay, setPricePerDay] = useState('')
-    const [pricePerWeek, setPricePerWeek] = useState('')
-    const [pricePerMonth, setPricePerMonth] = useState('')
+    const [pricePerDay, setPricePerDay] = useState(0)
+    const [pricePerWeek, setPricePerWeek] = useState(0)
+    const [pricePerMonth, setPricePerMonth] = useState(0)
     const [description, setDescription] = useState('')
     const [vehicleType, setVehicleType] = useState('')
-    const [capacity, setCapacity] = useState()
+    const [capacity, setCapacity] = useState(0)
     const [loading, setLoading] = useState(false)
+    const [recentlyAdded, setRecentlyAdded] = useState([])
 
     const navigate = useNavigate()
 
@@ -29,14 +30,29 @@ export default function AddVehicle() {
         navigate('/registered-vehicles')
     }
 
+    const fetchRecentlyAddedVehicles = async () => {
+        try {
+            const response = await axios.get(API.GET_RECENT_CARS)
+            setRecentlyAdded(response.data.data)
+        } catch (err) {
+            console.log(err)
+            errorNotify(err.response.data.message)
+        }
+    }
+
     const addVehicleSubmit = async (e) => {
         try {
             e.preventDefault()
             setLoading(true)
-            if (!name || !registrationNumber || !pricePerDay || !pricePerWeek || !pricePerMonth || !description || !vehicleType || !capacity) {
+            if (!name) {
                 setLoading(false)
-                return errorNotify('All fields are required.')
-        }
+                return errorNotify('Name is required')
+            }
+
+            if(!registrationNumber) {
+                setLoading(false)
+                return errorNotify('Registration # is required')
+            }
 
             let images = e.target.elements.images.files
             const formData = new FormData()
@@ -68,13 +84,18 @@ export default function AddVehicle() {
             setDescription('')
             setCapacity(0)
             setVehicleType('')
-            
+
+            fetchRecentlyAddedVehicles()
             setLoading(false)
         } catch (err) {
             errorNotify(err.response.data.message)
             setLoading(false)
         }
     }
+
+    useEffect(() => {
+        fetchRecentlyAddedVehicles()
+    }, [])
     return (
         <Layout>
             <CustomContainer otherStyles='p-6 flex flex-col xl:flex-row mt-8'>
@@ -110,10 +131,9 @@ export default function AddVehicle() {
                 </div>
                 <div className='border-l-2 h-[550px] xl:w-[1000px] mt-10 xl:mt-0 border-gray-300 pl-4 overflow-scroll'>
                     <h1 className='font-bold text-2xl'>Recently Added</h1>
-                    <RecentlyAddedVehicleCard />
-                    <RecentlyAddedVehicleCard />
-                    <RecentlyAddedVehicleCard />
-                    <RecentlyAddedVehicleCard />
+                    {recentlyAdded.map(car => (
+                        <RecentlyAddedVehicleCard car={car} />
+                    ))}
                 </div>
             </CustomContainer>
         </Layout>

@@ -1,20 +1,21 @@
-export default function RecentlyAddedVehicleCard() {
+export default function RecentlyAddedVehicleCard({car}) {
+    console.log(car)
     return (
         <div className='flex items-start border-2 border-gray-200 p-3 text-sm rounded-lg mt-4'>
             <div className='flex flex-col space-y-3'>
-                <span>Honda Corolla</span>
-                <span>Reg No# CL-5522</span>
-                <span>Location: Santa Barbara, CA, US</span>
+                <span>{car.name}</span>
+                <span>Reg No# {car.registrationNo}</span>
+                {/* <span>Location: N/A</span>
                 <div>
                     <span>Timings: </span>
-                    <span>Wednesday - 20-12-22/12:30 PM To 5:30PM</span>
-                </div>
+                    <span>N/A</span>
+                </div> */}
                 <div>
-                    <span>Price:</span>
-                    <span>$200/week</span>
+                    <strong>Price:</strong>
+                    <span>${car.price.pricePerDay} / day</span>
                 </div>
             </div>
-            <img src={require('../assets/images/toyota.png')} alt='' />
+            <img src={car.images[0]?.url} alt='' />
         </div>
     )
 }

@@ -1,22 +1,16 @@
 import React, { useEffect, useState, useCallback } from "react";
-import Popup from 'reactjs-popup';
 import './custom-modal/custom-modal.css'
-import CustomInput from "./custom-input.component";
-import CustomButton from "./custom-button.component";
 
 const InvoiceTable = ({ vehicles, items, setItems, total, setTotal }) => {
-  const [selectedCar, setSelectedCar] = useState(null)
-  const [days, setDays] = useState(0)
+  const [addItemToggle, setAddItemToggle] = useState(false)
+  const [openList, setOpenList] = useState(false)
 
-  const handleAddRow = (close) => {
+  const handleAddRow = (selectedCar) => {
     const id = items.length + 1;
-    if (!selectedCar) return
-    const newItems = [...items, { id, item: selectedCar, days: days, price: selectedCar.price.pricePerDay * days }];
+    const newItems = [...items, { id, item: selectedCar, price: selectedCar.price.pricePerDay, quantity: 1 }];
     setItems(newItems);
-
-    setSelectedCar(null)
-    setDays(0)
-    close()
+    setAddItemToggle(false)
+    setOpenList(false)
   };
 
   const handleDeleteRow = (id) => {
@@ -35,13 +29,8 @@ const InvoiceTable = ({ vehicles, items, setItems, total, setTotal }) => {
   //   setItems(updatedItems);
   // };
 
-  const onSelectChange = e => {
-    const foundVehicle = vehicles.find(vehicle => vehicle._id === e.target.value)
-    setSelectedCar(foundVehicle)
-  }
-
   const calculateTotal = useCallback(() => {
-    const total = items.reduce((acc, item) => acc + item.price, 0);
+    const total = items.reduce((acc, item) => (acc + Number(item.price)), 0);
     setTotal(total);
   }, [items, setTotal]);
 
@@ -49,68 +38,78 @@ const InvoiceTable = ({ vehicles, items, setItems, total, setTotal }) => {
     calculateTotal()
   }, [calculateTotal])
 
+  const handleChange = (e, carId, key) => {
+    const updateditems = items.map(item => {
+      if(item.id === carId) {
+        return {...item, [key]: e.target.value}
+      }
+      return item
+    })
 
+    setItems(updateditems)
+  }
   return (
     <>
-      <div className="h-[250px] overflow-y-scroll border-2 border-slate-200">
-        <table className="w-full">
+      <div className="overflow-y-scroll border-2 h-[400px] border-slate-200" onClick={() => { openList && setOpenList(false) }}>
+        <table className="w-full relative">
           <thead className="bg-gray-300 sticky top-0">
             <tr>
-              <th>Items</th>
-              <th>Days</th>
-              <th>Price</th>
-              <th></th>
+              <th className="w-6/12">Items</th>
+              <th className="w-1/12">Quantity</th>
+              <th className="w-1/12">Price</th>
+              <th className="w-1/12">Amount</th>
+              <th className="w-1/12"></th>
             </tr>
           </thead>
           <tbody>
             {items?.map((item) => (
-              <tr key={item.id} className="text-center p-2">
-                <td>
+              <tr key={item.id} className="border-b-2 border-slate-200">
+                <td className="p-2 text-sm font-medium lg:text-base text-start">
                   {item.item.name}
                 </td>
-                <td>
-                  {item.days}
+                <td className="py-2 text-center text-sm lg:text-base">
+                  <input value={item.quantity} className="text-end w-9/12 border-2 pr-2 border-slate-100 rounded-lg " onChange={e => handleChange(e, item.id, 'quantity')}/>
                 </td>
-                <td>
-                  {item.price}
+                <td className="py-2 text-center text-sm lg:text-base">
+                  <span>$</span>
+                  <input value={item.price} onChange={e => handleChange(e, item.id, 'price')} className="text-end w-9/12 border-2 pr-2 border-slate-100 rounded-lg ml-1" />
                 </td>
-                <td>
+                <td className="py-2 text-center text-sm lg:text-base">
+                  {'$' + item.price}
+                </td>
+                <td className="py-4 flex justify-center items-center">
                   {items.length > 0 && (
-                    <button className="text-red-500" onClick={() => handleDeleteRow(item.id)}>Delete</button>
+                    <img alt="" src={require('../assets/icons/delete.png')} className="text-red-500" onClick={() => handleDeleteRow(item.id)}></img>
                   )}
                 </td>
               </tr>
             ))}
             <tr className="flex justify-center mt-4">
-              <Popup
-                trigger={<button className="button bg-slate-300 rounded-lg text-sm px-2 shadow-md py-1">Add Item</button>}
-                modal
-                nested
-              >
-                {close => (
-                  <div className="modal">
-                    <button className="close" onClick={close}>
-                      &times;
-                    </button>
-                    <div className="header">Create Invoice</div>
-                    <div className="content">
-                      <select defaultValue="" onChange={onSelectChange} className="rounded-md outline-none border-2 bg-white border-[#FEBD20] my-4 mx-2 px-3 py-3 w-full xl:w-[300px] text-sm">
-                        <option value="" selected hidden>Select Car</option>
-                        {vehicles.map(vehicle => {
-                          return (
-                            <option value={vehicle._id}>{vehicle.name}</option>
-                          )
-                        })}
-                      </select>
-                      <CustomInput placeholder='Days' type='number' onChange={(e) => setDays(e.target.value)} />
-                      <span className="font-bold text-lg">Total: ${selectedCar?.price.pricePerDay * days || 0}</span>
-                    </div>
-                    <div className="actions">
-                      <CustomButton onClick={() => handleAddRow(close)}>Submit</CustomButton>
-                    </div>
+              {addItemToggle ? (
+                <div className="w-full relative ml-4">
+
+                  <div className="w-full p-2 rounded-lg bg-white border-2 border-[#FEBD20] cursor- flex items-center space-x-2" onClick={() => setOpenList(!openList)}>
+                    <img alt="" src={require('../assets/icons/search.png')} width={20} height={20} />
+                    <input placeholder="Search Car..." className="w-full color-black outline-none" />
                   </div>
-                )}
-              </Popup>
+
+                  {openList && (
+                    <div className="shadow-md absolute w-full rounded-lg h-40 flex flex-col overflow-y-scroll scroll-smooth">
+                      {vehicles.map((vehicle, idx) => (
+                        <div key={vehicle._id} onClick={() => handleAddRow(vehicle)} className={`flex p-2 hover:bg-slate-100 items-center justify-between ${vehicles.length - 1 !== idx && 'border-b-2 border-slate-200' }`}>
+                          <div className="flex flex-col text-xs lg:text-sm my-2">
+                            <strong>{vehicle.name}</strong>
+                            <span>{vehicle.type}</span>
+                          </div>
+                          <span className="text-sm xl:text-base font-bold">{'$' + vehicle.price.pricePerDay}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button onClick={() => setAddItemToggle(true)} className={`button bg-slate-300 rounded-lg text-sm px-2 shadow-md py-1 ${addItemToggle && 'hidden'}`}>Add Item</button>
+              )}
 
             </tr>
           </tbody>
