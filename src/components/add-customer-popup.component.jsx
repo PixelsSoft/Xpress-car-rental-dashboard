@@ -122,7 +122,8 @@ export default function AddCustomerPopup({
                   .filter(
                     (customer) =>
                       customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
-                      customer.lastName.toLowerCase().includes(search.toLowerCase()),
+                      customer.lastName.toLowerCase().includes(search.toLowerCase()) ||
+                      (customer.firstName + ' ' + customer.lastName).toLowerCase().includes(search.toLowerCase())
                   )
                   .map(user => renderCustomers(user))
               : customers.map((user) => renderCustomers(user))}

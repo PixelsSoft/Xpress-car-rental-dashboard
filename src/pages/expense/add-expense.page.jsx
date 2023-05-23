@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "../../components/layout.component";
 import CustomContainer from "../../components/custom-container.component";
 import CustomInput from "../../components/custom-input.component";
@@ -18,12 +18,15 @@ const AddExpense = () => {
     const [date, setDate] = useState('')
     const [loading, setLoading] = useState(false)
 
+    const [recentExpenses, setRecentExpenses] = useState([])
+
     const navigate = useNavigate()
 
     const onSubmit = async e => {
         e.preventDefault()
         try {
             if(!title || !type || !amount || !description || !date) return errorNotify('All fields are required')
+            setLoading(true)
             await axios.post(API.ADD_EXPENSE, {
                 title, type, amount, description, date
             })
@@ -35,6 +38,7 @@ const AddExpense = () => {
             setAmount(0)
             setDate('')
 
+            getRecentExpenses()
             setLoading(false)
         } catch (err) {
             console.log(err)
@@ -47,8 +51,21 @@ const AddExpense = () => {
         e.preventDefault()
         navigate('/expenses')
     }
-
-
+    const getRecentExpenses = async () => {
+        try {
+            const response = await axios.get(API.GET_RECENT_EXPENSES)
+            
+            if(response.data.success) {
+                setRecentExpenses(response.data.data)
+            }
+        } catch (err) {
+            console.log(err)
+            errorNotify(err.response.data.message)
+        }
+    }
+    useEffect(() => {
+        getRecentExpenses()
+    }, [])
     return (
         <Layout>
             <div className="flex items-center justify-between mt-10 p-2">
@@ -85,10 +102,9 @@ const AddExpense = () => {
 
                 <div className="w-full xl:w-2/4 mt-8 xl:mt-0">
                     <h1 className="font-bold mb-4 text-center">Recent Expenses</h1>
-                    <ExpenseCard />
-                    <ExpenseCard />
-                    <ExpenseCard />
-                    <ExpenseCard />
+                    {recentExpenses.map(expense => (
+                        <ExpenseCard expense={expense} />
+                    ))}
                 </div>
             </CustomContainer>
         </Layout>

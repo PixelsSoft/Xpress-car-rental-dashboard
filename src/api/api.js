@@ -1,5 +1,5 @@
-const BASE_URL = 'https://xpress-rental.onrender.com'
-// const BASE_URL = 'http://localhost:8001'
+// const BASE_URL = 'https://xpress-rental.onrender.com'
+const BASE_URL = 'http://localhost:8001'
 const API = {
     
     LOGIN: `${BASE_URL}/auth/login`,
@@ -21,6 +21,7 @@ const API = {
     UPDATE_EXPENSE: `${BASE_URL}/expenses/`,
     GET_EXPENSES: `${BASE_URL}/expenses`,
     GET_EXPENSES_TOTAL: `${BASE_URL}/expense-total`,
+    GET_RECENT_EXPENSES: `${BASE_URL}/recent-expenses`,
 
     DELETE_VEHICLE_PROFILE: `${BASE_URL}/cars/`,
     GET_VEHICLE_DATA: `${BASE_URL}/cars/`,
@@ -28,8 +29,10 @@ const API = {
 
     GET_RENTING_HISTORY: `${BASE_URL}/invoices/history/`,
 
-    GET_CUSTOMERS: `${BASE_URL}/customers`,
-    CREATE_CUSTOMER: `${BASE_URL}/customers/create`
+    GET_CUSTOMERS: `${BASE_URL}/customers/`,
+    CREATE_CUSTOMER: `${BASE_URL}/customers/create`,
+    DELETE_CUSTOMER_PROFILE: `${BASE_URL}/customers`,
+    DEACTIVATE_PROFILE: `${BASE_URL}/deactivate-customer/`
 }
 
 export default API

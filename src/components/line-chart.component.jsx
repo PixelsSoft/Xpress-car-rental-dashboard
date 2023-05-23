@@ -34,14 +34,6 @@ const options = {
     },
   },
   responsive: true,
-  scales: {
-    x: {
-      stacked: true,
-    },
-    y: {
-      stacked: true,
-    },
-  },
 }
 
 const data = {
@@ -54,7 +46,7 @@ const data = {
       borderWidth: 2,
       fill: true,
       pointBackgroundColor: 'white',
-      data: [100, 200, 500, 800, 1000, 1200],
+      data: [125, 200, 500, 800, 1000, 1200],
     },
     {
       type: 'bar',
@@ -68,7 +60,7 @@ const data = {
       type: 'bar',
       label: 'Outflow',
       backgroundColor: 'grey',
-      data: [-120, -220, -330, -500, -150, -250],
+      data: [120, 220, 330, 500, 150, 250],
     },
   ],
 }

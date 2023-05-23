@@ -2,12 +2,27 @@ import Layout from "../../components/layout.component";
 import CustomTable from '../../components/custom-table/custom-table.component';
 import CustomContainer from '../../components/custom-container.component'
 import { usersColumn } from '../../config/columns'
-import { usersData } from '../../config/table-data'
-import CustomBreadcumb from '../../components/custom-breadcumb.component'
 import CustomButton from "../../components/custom-button.component";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import API from "../../api/api";
 
 export default function User() {
+    const [customers, setCustomers] = useState([])
+    const getCustomers = async () => {
+        try {
+            const response = await axios.get(API.GET_CUSTOMERS)
+            setCustomers(response.data)
+        } catch (err) {
+            console.log(err)
+        }
+    }
+    useEffect(() => {
+        getCustomers()
+    }, [])
+
+    console.log(customers)
     return (
         <Layout>
             <div className="flex items-center p-3 mt-10">
@@ -22,9 +37,9 @@ export default function User() {
                     </Link>
                 </div>
             </div>
-            <CustomBreadcumb filters={['All', 'Activated', 'Deactivated']} />
+            {/* <CustomBreadcumb filters={['All', 'Activated', 'Deactivated']} /> */}
             <CustomContainer otherStyles='mt-4'>
-                <CustomTable columns={usersColumn} data={usersData} pagination={true} perPage={10} />
+                <CustomTable columns={usersColumn} data={customers} pagination={true} perPage={10} />
             </CustomContainer>
         </Layout>
     )

@@ -35,7 +35,7 @@ export default function App() {
             <Route path='/add-vehicle' element={<AddVehicle />} />
             <Route path='/invoicing' element={<Invoicing />} />
             <Route path='/transactions' element={<Transactions />} />
-            <Route path='/user-profile' element={<UserProfile />} />
+            <Route path='/user-profile/:id' element={<UserProfile />} />
             <Route path='/vehicle-profile/:id' element={<RegisteredVehicleProfile />} />
             <Route path='/add-card' element={<AddCard />} />
             <Route path='/create-invoice' element={<CreateInvoice />} />

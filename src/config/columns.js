@@ -143,37 +143,30 @@ export const expensesColumns = (handleDelete, handleUpdate, title, setTitle, des
 export const usersColumn = [
     {
         name: 'Sno',
-        selector: row => row.sno
+        selector: (row, idx) => <CustomIndexCell rowIndex={idx} />,
+        width: '80px'
     },
     {
         name: 'User ID',
-        selector: row => row.userId
+        selector: row => row._id
     },
     {
         name: 'Name',
         // selector: row => row.name,
-        cell: row => <Link to='/user-profile'>{row.name}</Link>
+        cell: row => <Link to={`/user-profile/${row._id}`}>{row.firstName + ' ' + row.lastName}</Link>
     },
     {
         name: 'Contact',
-        selector: row => row.contact
+        selector: row => row.phone
     },
     {
-        name: 'Address',
-        selector: row => row.address
-    },
-    {
-        name: 'Register Date',
-        selector: row => row.registerDate
-    },
-    {
-        name: 'Status',
-        selector: row => row.status
-    },
-    {
-        name: 'Payment Method',
-        cell: row => <img src={row.paymentMethod} alt='' />
-    },
+        name: 'Email',
+        selector: row => row.email
+    }
+    // {
+    //     name: 'Payment Method',
+    //     cell: row => <img src={row.paymentMethod} alt='' />
+    // },
 ]
 
 export const registeredVehiclesColumns = (handleDelete) => ([
