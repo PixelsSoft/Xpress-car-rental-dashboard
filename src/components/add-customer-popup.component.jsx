@@ -14,6 +14,7 @@ export default function AddCustomerPopup({
   const [showList, setShowList] = useState(false)
 
   const [customers, setCustomers] = useState([])
+  const [search, setSearch] = useState('')
 
   const [customer, setCustomer] = useState('')
   const [email, setEmail] = useState('')
@@ -31,26 +32,26 @@ export default function AddCustomerPopup({
   const saveCustomer = async (e) => {
     e.preventDefault()
     try {
-        const response = await axios.post(API.CREATE_CUSTOMER, {
-            customer,
-            email,
-            firstName,
-            lastName,
-            phone
-        })
+      const response = await axios.post(API.CREATE_CUSTOMER, {
+        customer,
+        email,
+        firstName,
+        lastName,
+        phone,
+      })
 
-        if(response.data.success) {
-            successNotify('Customer added')
+      if (response.data.success) {
+        successNotify('Customer added')
 
-            setCustomer('')
-            setEmail('')
-            setFirstName('')
-            setLastName('')
-            setPhone('')
-        }
-        getCustomers()
-    } catch(err) {
-        console.log(err.response)
+        setCustomer('')
+        setEmail('')
+        setFirstName('')
+        setLastName('')
+        setPhone('')
+      }
+      getCustomers()
+    } catch (err) {
+      console.log(err.response)
     }
   }
 
@@ -62,15 +63,14 @@ export default function AddCustomerPopup({
   }, [])
 
   const getCustomers = async () => {
-      try {
-          const response = await axios.get(API.GET_CUSTOMERS)
-          setCustomers(response.data)
-      } catch(err) {
-          console.log(err)
-      }
+    try {
+      const response = await axios.get(API.GET_CUSTOMERS)
+      setCustomers(response.data)
+    } catch (err) {
+      console.log(err)
+    }
   }
   useEffect(() => {
-
     getCustomers()
   }, [])
 
@@ -79,6 +79,15 @@ export default function AddCustomerPopup({
       setShowList(false)
     }
   }
+
+  const renderCustomers = (user) => (
+    <li
+      onClick={() => handleSelectUser(user)}
+      className="font-bold p-3 text-sm hover:bg-slate-200"
+    >
+      {user.firstName + ' ' + user.lastName}
+    </li>
+  )
 
   return !toggleSearch ? (
     <div
@@ -99,6 +108,8 @@ export default function AddCustomerPopup({
     <div className="w-3/12 relative">
       <input
         ref={searchInputRef}
+        onChange={e => setSearch(e.target.value)}
+        value={search}
         placeholder="Search customer name..."
         className="outline-none border-[#FEBD20] border-2 rounded-lg p-2 text-sm w-full"
         onFocus={() => setShowList(true)}
@@ -106,14 +117,15 @@ export default function AddCustomerPopup({
       {showList && (
         <div className="absolute z-10 w-full bg-white shadow-md">
           <ul className="rounded-md overflow-y-scroll">
-            {customers.map((user) => (
-              <li
-                onClick={() => handleSelectUser(user)}
-                className="font-bold p-3 text-sm hover:bg-slate-200"
-              >
-                {user.firstName + ' ' + user.lastName}
-              </li>
-            ))}
+            {search.length > 0
+              ? customers
+                  .filter(
+                    (customer) =>
+                      customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
+                      customer.lastName.toLowerCase().includes(search.toLowerCase()),
+                  )
+                  .map(user => renderCustomers(user))
+              : customers.map((user) => renderCustomers(user))}
           </ul>
         </div>
       )}
@@ -168,7 +180,7 @@ export default function AddCustomerPopup({
               </div>
               <div className="space-x-2 my-6 flex justify-end w-full">
                 <CustomButton onClick={close}>Cancel</CustomButton>
-                <CustomButton type='submit'>Save</CustomButton>
+                <CustomButton type="submit">Save</CustomButton>
               </div>
             </form>
           </div>
