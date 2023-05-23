@@ -1,80 +1,179 @@
-import { useRef, useState, useEffect } from "react"
-import Popup from "reactjs-popup"
-import { usersData } from '../config/table-data'
-import CustomInput from "./custom-input.component"
-import CustomButton from "./custom-button.component"
+import { useRef, useState, useEffect } from 'react'
+import Popup from 'reactjs-popup'
+import CustomInput from './custom-input.component'
+import CustomButton from './custom-button.component'
+import axios from 'axios'
+import API from '../api/api'
+import { successNotify } from '../utils/success-notify.util'
 
-export default function AddCustomerPopup({ setCustomerEmail, setCustomerName }) {
-    const [toggleSearch, setToggleSearch] = useState(false)
-    const [showList, setShowList] = useState(false)
+export default function AddCustomerPopup({
+  setCustomerEmail,
+  setCustomerName,
+}) {
+  const [toggleSearch, setToggleSearch] = useState(false)
+  const [showList, setShowList] = useState(false)
 
-    const searchInputRef = useRef()
-    const handleSelectUser = (user) => {
-        setCustomerEmail(user.email)
-        setCustomerName(user.name)
-        setShowList(false)
-    }
+  const [customers, setCustomers] = useState([])
 
-    useEffect(() => {
-        document.addEventListener('click', handleDocumentClick);
-        return () => {
-            document.removeEventListener('click', handleDocumentClick);
-        };
-    }, [])
+  const [customer, setCustomer] = useState('')
+  const [email, setEmail] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [phone, setPhone] = useState('')
 
-    const handleDocumentClick = (event) => {
-        if (!searchInputRef.current?.contains(event.target)) {
-            setShowList(false);
+  const searchInputRef = useRef()
+  const handleSelectUser = (user) => {
+    setCustomerEmail(user.email)
+    setCustomerName(user.firstName + ' ' + user.lastName)
+    setShowList(false)
+  }
+
+  const saveCustomer = async (e) => {
+    e.preventDefault()
+    try {
+        const response = await axios.post(API.CREATE_CUSTOMER, {
+            customer,
+            email,
+            firstName,
+            lastName,
+            phone
+        })
+
+        if(response.data.success) {
+            successNotify('Customer added')
+
+            setCustomer('')
+            setEmail('')
+            setFirstName('')
+            setLastName('')
+            setPhone('')
         }
-    };
+        getCustomers()
+    } catch(err) {
+        console.log(err.response)
+    }
+  }
 
-    return !toggleSearch ? (
-        <div onClick={() => setToggleSearch(true)} className="flex flex-col items-center justify-center border-dotted cursor-pointer hover:border-solid w-[300px] border-gray-400 border-2 py-10 px-4 rounded-lg">
-            <div className="flex items-center pb-4">
-                <img src={require('../assets/icons/upload-pic.png')} alt='' width={50} height={50} />
-                <span className="font-bold pl-2 w-fit text-sm">Add a customer</span>
+  useEffect(() => {
+    document.addEventListener('click', handleDocumentClick)
+    return () => {
+      document.removeEventListener('click', handleDocumentClick)
+    }
+  }, [])
+
+  const getCustomers = async () => {
+      try {
+          const response = await axios.get(API.GET_CUSTOMERS)
+          setCustomers(response.data)
+      } catch(err) {
+          console.log(err)
+      }
+  }
+  useEffect(() => {
+
+    getCustomers()
+  }, [])
+
+  const handleDocumentClick = (event) => {
+    if (!searchInputRef.current?.contains(event.target)) {
+      setShowList(false)
+    }
+  }
+
+  return !toggleSearch ? (
+    <div
+      onClick={() => setToggleSearch(true)}
+      className="flex flex-col items-center justify-center border-dotted cursor-pointer hover:border-solid w-[300px] border-gray-400 border-2 py-10 px-4 rounded-lg"
+    >
+      <div className="flex items-center pb-4">
+        <img
+          src={require('../assets/icons/upload-pic.png')}
+          alt=""
+          width={50}
+          height={50}
+        />
+        <span className="font-bold pl-2 w-fit text-sm">Add a customer</span>
+      </div>
+    </div>
+  ) : (
+    <div className="w-3/12 relative">
+      <input
+        ref={searchInputRef}
+        placeholder="Search customer name..."
+        className="outline-none border-[#FEBD20] border-2 rounded-lg p-2 text-sm w-full"
+        onFocus={() => setShowList(true)}
+      />
+      {showList && (
+        <div className="absolute z-10 w-full bg-white shadow-md">
+          <ul className="rounded-md overflow-y-scroll">
+            {customers.map((user) => (
+              <li
+                onClick={() => handleSelectUser(user)}
+                className="font-bold p-3 text-sm hover:bg-slate-200"
+              >
+                {user.firstName + ' ' + user.lastName}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
+      <Popup
+        trigger={
+          <button
+            type="button"
+            className="w-full rounded-lg mt-3 py-2 text-sm text-center border-t-2 border-slate-100 flex items-center justify-center bg-[#FEBD20] font-bold cursor-pointer hover:bg-black ease-in duration-150 hover:text-white"
+          >
+            + Create a new customer
+          </button>
+        }
+        modal
+      >
+        {(close) => (
+          <div className="p-2">
+            <div className="flex justify-between border-b-2 border-slate-200 p-2">
+              <span className="text-gray-400">New Customer</span>
+              <span onClick={close} className="cursor-pointer">
+                X
+              </span>
             </div>
-        </div>
-    ) : (
-        <div className="w-3/12 relative">
-            <input ref={searchInputRef} placeholder='Search customer name...' className="outline-none border-[#FEBD20] border-2 rounded-lg p-2 text-sm w-full" onFocus={() => setShowList(true)} />
-            {showList && (
-                <div className="absolute z-10 w-full bg-white shadow-md">
-                    <ul className="rounded-md overflow-y-scroll">
-                        {usersData.map(user => (
-                            <li onClick={() => handleSelectUser(user)} className="font-bold p-3 text-sm hover:bg-slate-200">{user.name}</li>
-                        ))}
-                    </ul>
-                </div>
-            )}
 
-            <Popup
-                trigger={<button type='button' className="w-full rounded-lg mt-3 py-2 text-sm text-center border-t-2 border-slate-100 flex items-center justify-center bg-[#FEBD20] font-bold cursor-pointer hover:bg-black ease-in duration-150 hover:text-white">+ Create a new customer</button>}
-                modal
-            >
-                {close => (
-                    <div className="p-2">
-                        <div className="flex justify-between border-b-2 border-slate-200 p-2">
-                            <span className="text-gray-400">New Customer</span>
-                            <span onClick={close} className="cursor-pointer">X</span>
-                        </div>
-
-                        <form className="w-full flex flex-col items-center">
-                            <div className="space-y-4">
-                                <CustomInput placeholder='Customer (Business or person)' />
-                                <CustomInput placeholder='Email' />
-                                <CustomInput placeholder='Phone #' />
-                                <CustomInput placeholder='First Name' />
-                                <CustomInput placeholder='Last Name' />
-                            </div>
-                            <div className="space-x-2 my-6 flex justify-end w-full">
-                                <CustomButton onClick={close}>Cancel</CustomButton>
-                                <CustomButton>Save</CustomButton>
-                            </div>
-                        </form>
-                    </div>
-                )}
-            </Popup>
-        </div>
-    )
+            <form className="w-full items-center" onSubmit={saveCustomer}>
+              <div className="w-full flex flex-wrap ">
+                <CustomInput
+                  value={customer}
+                  onChange={(e) => setCustomer(e.target.value)}
+                  placeholder="Customer (Business or person)"
+                />
+                <CustomInput
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email"
+                />
+                <CustomInput
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value)}
+                  placeholder="Phone #"
+                />
+                <CustomInput
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="First Name"
+                />
+                <CustomInput
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Last Name"
+                />
+              </div>
+              <div className="space-x-2 my-6 flex justify-end w-full">
+                <CustomButton onClick={close}>Cancel</CustomButton>
+                <CustomButton type='submit'>Save</CustomButton>
+              </div>
+            </form>
+          </div>
+        )}
+      </Popup>
+    </div>
+  )
 }

@@ -70,7 +70,7 @@ export default function Dashboard() {
 
             <CustomContainer otherStyles='mt-10 w-full p-4' >
                 <h2 className='font-bold text-3xl'>Dashboard</h2>
-                <div className='w-full flex flex-row justify-evenly items-center'>
+                <div className='w-full flex flex-row justify-center items-center'>
                     <BarChart />
                 </div>
             </CustomContainer>

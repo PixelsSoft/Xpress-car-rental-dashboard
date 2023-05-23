@@ -11,7 +11,6 @@ export default function Header() {
         setUser(JSON.parse(localStorage.getItem('@user_details')).user)
     }, [])
 
-    console.log(user)
     return (
         <div className='w-full flex items-center justify-between'>
             <div className='flex flex-col ml-[100px] md:ml-0'>

@@ -1,70 +1,82 @@
-import React from 'react';
+import React from 'react'
 import {
   Chart as ChartJS,
-  CategoryScale,
   LinearScale,
+  CategoryScale,
+  BarElement,
   PointElement,
   LineElement,
-  Title,
-  Tooltip,
   Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
+  Tooltip,
+  LineController,
+  BarController,
+} from 'chart.js'
+import { Chart } from 'react-chartjs-2'
 
 ChartJS.register(
-  CategoryScale,
   LinearScale,
+  CategoryScale,
+  BarElement,
   PointElement,
   LineElement,
-  Title,
+  Legend,
   Tooltip,
-  Legend
-);
+  LineController,
+  BarController,
+)
 
-export const options = {
-  responsive: true,
-  maintainAspectRatio: false,
+const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
+const options = {
   plugins: {
-    legend: {
-      position: 'top',
-    },
     title: {
       display: true,
-      text: 'Cash Flow',
+      text: 'Chart.js Bar Chart - Stacked',
     },
   },
-};
+  responsive: true,
+  scales: {
+    x: {
+      stacked: true,
+    },
+    y: {
+      stacked: true,
+    },
+  },
+}
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-
-export const data = {
+const data = {
   labels,
   datasets: [
     {
-      label: 'Inflow',
-      data: [2332, 2313, 21321, 30233, 12322, 12331,34213, 2132, 21333, 12312, 42300, 50000],
-      borderColor: 'green',
-      backgroundColor: 'green',
-      pointRadius: 6,
-      borderWidth: 5,
-      pointBackgroundColor: 'darkgreen'
+      type: 'line',
+      label: '',
+      borderColor: 'black',
+      borderWidth: 2,
+      fill: true,
+      pointBackgroundColor: 'white',
+      data: [100, 200, 500, 800, 1000, 1200],
     },
     {
+      type: 'bar',
+      label: 'Inflow',
+      backgroundColor: 'green',
+      data: [125, 200, 600, 800, 1200, 1500],
+      borderColor: 'white',
+      borderWidth: 2,
+    },
+    {
+      type: 'bar',
       label: 'Outflow',
-      data: [13213, 2132, 3332, 14244, 2030, 2133, 42738, 33200, 32888, 3211, 23234, 29939],
-      borderColor: 'gray',
-      backgroundColor: 'gray',
-      borderWidth: 5,
-      pointRadius: 6,
-      pointBackgroundColor: 'black'
+      backgroundColor: 'grey',
+      data: [-120, -220, -330, -500, -150, -250],
     },
   ],
-};
+}
 
-export default function LineChart() {
+export default function BarChart() {
   return (
-    <div className='w-full h-[400px] text-2xl'>
-      <Line options={options} data={data} />
+    <div className="w-full flex justify-center h-[400px] text-2xl">
+      <Chart options={options} type="bar" data={data} />
     </div>
   )
 }

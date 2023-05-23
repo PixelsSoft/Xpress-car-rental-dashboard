@@ -27,6 +27,9 @@ const API = {
     GET_RECENT_CARS: `${BASE_URL}/recent-cars`,
 
     GET_RENTING_HISTORY: `${BASE_URL}/invoices/history/`,
+
+    GET_CUSTOMERS: `${BASE_URL}/customers`,
+    CREATE_CUSTOMER: `${BASE_URL}/customers/create`
 }
 
 export default API
