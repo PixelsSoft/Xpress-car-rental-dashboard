@@ -4,7 +4,7 @@ import CustomInput from './custom-input.component'
 import CustomButton from './custom-button.component'
 import axios from 'axios'
 import API from '../api/api'
-import { successNotify } from '../utils/success-notify.util'
+import { errorNotify, successNotify } from '../utils/success-notify.util'
 
 export default function AddCustomerPopup({
   setCustomerEmail,
@@ -15,6 +15,7 @@ export default function AddCustomerPopup({
 
   const [customers, setCustomers] = useState([])
   const [search, setSearch] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const [customer, setCustomer] = useState('')
   const [email, setEmail] = useState('')
@@ -29,9 +30,10 @@ export default function AddCustomerPopup({
     setShowList(false)
   }
 
-  const saveCustomer = async (e) => {
+  const saveCustomer = async (e, close) => {
     e.preventDefault()
     try {
+      setLoading(true)
       const response = await axios.post(API.CREATE_CUSTOMER, {
         customer,
         email,
@@ -49,9 +51,13 @@ export default function AddCustomerPopup({
         setLastName('')
         setPhone('')
       }
+      setLoading(false)
+      close()
       getCustomers()
     } catch (err) {
-      console.log(err.response)
+      console.log(err)
+      setLoading(false)
+      errorNotify(err.response.data.message)
     }
   }
 
@@ -108,7 +114,7 @@ export default function AddCustomerPopup({
     <div className="w-3/12 relative">
       <input
         ref={searchInputRef}
-        onChange={e => setSearch(e.target.value)}
+        onChange={(e) => setSearch(e.target.value)}
         value={search}
         placeholder="Search customer name..."
         className="outline-none border-[#FEBD20] border-2 rounded-lg p-2 text-sm w-full"
@@ -116,16 +122,22 @@ export default function AddCustomerPopup({
       />
       {showList && (
         <div className="absolute z-10 w-full bg-white shadow-md">
-          <ul className="rounded-md overflow-y-scroll">
+          <ul className="rounded-md overflow-y-scroll h-64">
             {search.length > 0
               ? customers
                   .filter(
                     (customer) =>
-                      customer.firstName.toLowerCase().includes(search.toLowerCase()) ||
-                      customer.lastName.toLowerCase().includes(search.toLowerCase()) ||
-                      (customer.firstName + ' ' + customer.lastName).toLowerCase().includes(search.toLowerCase())
+                      customer.firstName
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                      customer.lastName
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                      (customer.firstName + ' ' + customer.lastName)
+                        .toLowerCase()
+                        .includes(search.toLowerCase()),
                   )
-                  .map(user => renderCustomers(user))
+                  .map((user) => renderCustomers(user))
               : customers.map((user) => renderCustomers(user))}
           </ul>
         </div>
@@ -151,7 +163,10 @@ export default function AddCustomerPopup({
               </span>
             </div>
 
-            <form className="w-full items-center" onSubmit={saveCustomer}>
+            <form
+              className="w-full items-center"
+              onSubmit={(e) => saveCustomer(e, close)}
+            >
               <div className="w-full flex flex-wrap ">
                 <CustomInput
                   value={customer}
@@ -181,7 +196,9 @@ export default function AddCustomerPopup({
               </div>
               <div className="space-x-2 my-6 flex justify-end w-full">
                 <CustomButton onClick={close}>Cancel</CustomButton>
-                <CustomButton type="submit">Save</CustomButton>
+                <CustomButton loading={loading} type="submit">
+                  Save
+                </CustomButton>
               </div>
             </form>
           </div>
