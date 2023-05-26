@@ -118,7 +118,12 @@ export default function RegisteredVehicleProfile() {
             <CustomButton onClick={handleDeleteProfile}>
               Delete Profile
             </CustomButton>
-            <Popup trigger={<CustomButton>Edit Profile</CustomButton>} modal>
+            <Popup
+              trigger={<CustomButton>Edit Profile</CustomButton>}
+              modal
+              contentStyle={{ width: 'fit-content' }}
+              className="w-fit-content"
+            >
               {(close) => (
                 <div className="modal">
                   <button className="close" onClick={close}>

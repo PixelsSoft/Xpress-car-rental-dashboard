@@ -153,6 +153,8 @@ export default function AddCustomerPopup({
           </button>
         }
         modal
+        contentStyle={{ width: 'fit-content' }}
+        className="w-fit-content"
       >
         {(close) => (
           <div className="p-2">
@@ -167,7 +169,7 @@ export default function AddCustomerPopup({
               className="w-full items-center"
               onSubmit={(e) => saveCustomer(e, close)}
             >
-              <div className="w-full flex flex-wrap ">
+              <div className="w-full flex flex-col items-center">
                 <CustomInput
                   value={customer}
                   onChange={(e) => setCustomer(e.target.value)}
@@ -194,7 +196,7 @@ export default function AddCustomerPopup({
                   placeholder="Last Name"
                 />
               </div>
-              <div className="space-x-2 my-6 flex justify-end w-full">
+              <div className="space-x-2 mt-6 flex justify-end w-full">
                 <CustomButton onClick={close}>Cancel</CustomButton>
                 <CustomButton loading={loading} type="submit">
                   Save

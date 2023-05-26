@@ -25,7 +25,6 @@ ChartJS.register(
   BarController,
 )
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July']
 const options = {
   plugins: {
     title: {
@@ -36,36 +35,53 @@ const options = {
   responsive: true,
 }
 
-const data = {
-  labels,
-  datasets: [
-    {
-      type: 'line',
-      label: '',
-      borderColor: 'black',
-      borderWidth: 2,
-      fill: true,
-      pointBackgroundColor: 'white',
-      data: [125, 200, 500, 800, 1000, 1200],
-    },
-    {
-      type: 'bar',
-      label: 'Inflow',
-      backgroundColor: 'green',
-      data: [125, 200, 600, 800, 1200, 1500],
-      borderColor: 'white',
-      borderWidth: 2,
-    },
-    {
-      type: 'bar',
-      label: 'Outflow',
-      backgroundColor: 'grey',
-      data: [120, 220, 330, 500, 150, 250],
-    },
-  ],
-}
+export default function BarChart({ inflow, outflow }) {
+  const inflows = inflow.map((obj) => obj.totalAmount)
+  const outflows = outflow.map((obj) => obj.totalAmount)
+  const labels = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ]
 
-export default function BarChart() {
+  const data = {
+    labels,
+    datasets: [
+      {
+        type: 'line',
+        label: '',
+        borderColor: 'black',
+        borderWidth: 2,
+        fill: true,
+        pointBackgroundColor: 'white',
+        data: [125, 200, 500, 800, 1000, 1200],
+      },
+      {
+        type: 'bar',
+        label: 'Inflow',
+        backgroundColor: 'green',
+        data: inflows,
+        borderColor: 'white',
+        borderWidth: 2,
+      },
+      {
+        type: 'bar',
+        label: 'Outflow',
+        backgroundColor: 'grey',
+        data: outflows,
+      },
+    ],
+  }
+
   return (
     <div className="w-full flex justify-center h-[400px] text-2xl">
       <Chart options={options} type="bar" data={data} />

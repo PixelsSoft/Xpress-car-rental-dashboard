@@ -19,9 +19,39 @@ const AddExpense = () => {
   const [date, setDate] = useState('')
   const [loading, setLoading] = useState(false)
 
+  const [vendorName, setVendorName] = useState('')
+  const [vendorEmail, setVendorEmail] = useState('')
+  const [vendorFirstName, setVendorFirstName] = useState('')
+  const [vendorLastName, setVendorLastName] = useState('')
+
   const [recentExpenses, setRecentExpenses] = useState([])
 
   const navigate = useNavigate()
+
+  const onCreateVendor = async () => {
+    try {
+      setLoading(true)
+      const response = await axios.post(API.CREATE_VENDOR, {
+        name: vendorName,
+        email: vendorEmail,
+        firstName: vendorFirstName,
+        lastName: vendorLastName,
+      })
+
+      console.log(response.data)
+
+      if (response.data.success) {
+        setVendorEmail('')
+        setVendorFirstName('')
+        setVendorName('')
+        setVendorLastName('')
+      }
+      setLoading(false)
+    } catch (err) {
+      console.log(err)
+      setLoading(false)
+    }
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -72,6 +102,7 @@ const AddExpense = () => {
   useEffect(() => {
     getRecentExpenses()
   }, [])
+
   return (
     <Layout>
       <div className="flex items-center justify-between mt-10 p-2">
@@ -101,11 +132,52 @@ const AddExpense = () => {
                       + Add Vendor
                     </button>
                   }
+                  contentStyle={{ width: 'fit-content' }}
+                  className="w-fit-content"
                 >
                   {(close) => (
-                    <div className="flex items-center justify-between p-2">
-                      <h1>Add Vendor</h1>
-                      <span onClick={close}>X</span>
+                    <div>
+                      <div className="flex border-b-2 border-slate-100 items-center justify-between p-2">
+                        <h1>Add Vendor</h1>
+                        <span className="cursor-pointer" onClick={close}>
+                          X
+                        </span>
+                      </div>
+
+                      <div className="flex flex-col items-center">
+                        <CustomInput
+                          placeholder="Vendor name"
+                          value={vendorName}
+                          onChange={(e) => setVendorName(e.target.value)}
+                        />
+                        <CustomInput
+                          placeholder="Email"
+                          value={vendorEmail}
+                          onChange={(e) => setVendorEmail(e.target.value)}
+                        />
+                        <CustomInput
+                          placeholder="First Name"
+                          value={vendorFirstName}
+                          onChange={(e) => setVendorFirstName(e.target.value)}
+                        />
+                        <CustomInput
+                          placeholder="Last Name"
+                          value={vendorLastName}
+                          onChange={(e) => setVendorLastName(e.target.value)}
+                        />
+
+                        <div className="space-x-3 p-3">
+                          <CustomButton type="button" onClick={close}>
+                            Cancel
+                          </CustomButton>
+                          <CustomButton
+                            loading={loading}
+                            onClick={onCreateVendor}
+                          >
+                            Add Vendor
+                          </CustomButton>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </Popup>

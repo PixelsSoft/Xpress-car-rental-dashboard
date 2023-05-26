@@ -10,6 +10,7 @@ const API = {
   GET_INVOICES: `${BASE_URL}/invoices`,
   DELETE_INVOICE: `${BASE_URL}/invoices/`,
   GET_INVOICE_TOTAL: `${BASE_URL}/invoices/total`,
+  GET_MONTHLY_INFLOW: `${BASE_URL}/invoices/monthly-stats`,
 
   ADD_VEHICLE: `${BASE_URL}/cars/add`,
   GET_VEHICLES: `${BASE_URL}/cars`,
@@ -21,6 +22,7 @@ const API = {
   GET_EXPENSES: `${BASE_URL}/expenses`,
   GET_EXPENSES_TOTAL: `${BASE_URL}/expense-total`,
   GET_RECENT_EXPENSES: `${BASE_URL}/recent-expenses`,
+  GET_MONTHLY_OUTFLOW: `${BASE_URL}/expenses/monthly-outflow`,
 
   DELETE_VEHICLE_PROFILE: `${BASE_URL}/cars/`,
   GET_VEHICLE_DATA: `${BASE_URL}/cars/`,
@@ -32,6 +34,8 @@ const API = {
   CREATE_CUSTOMER: `${BASE_URL}/customers/create`,
   DELETE_CUSTOMER_PROFILE: `${BASE_URL}/customers`,
   DEACTIVATE_PROFILE: `${BASE_URL}/deactivate-customer/`,
+
+  CREATE_VENDOR: `${BASE_URL}/vendor/create`,
 }
 
 export default API
