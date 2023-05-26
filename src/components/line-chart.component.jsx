@@ -38,6 +38,9 @@ const options = {
 export default function BarChart({ inflow, outflow }) {
   const inflows = inflow.map((obj) => obj.totalAmount)
   const outflows = outflow.map((obj) => obj.totalAmount)
+  const netchange = inflow.map(
+    (obj, idx) => obj.totalAmount - outflow[idx]?.totalAmount,
+  )
   const labels = [
     'January',
     'February',
@@ -58,12 +61,12 @@ export default function BarChart({ inflow, outflow }) {
     datasets: [
       {
         type: 'line',
-        label: '',
+        label: 'Net Change',
         borderColor: 'black',
         borderWidth: 2,
         fill: true,
         pointBackgroundColor: 'white',
-        data: [125, 200, 500, 800, 1000, 1200],
+        data: netchange,
       },
       {
         type: 'bar',

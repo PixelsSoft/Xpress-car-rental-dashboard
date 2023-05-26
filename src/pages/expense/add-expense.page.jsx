@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Layout from '../../components/layout.component'
 import CustomContainer from '../../components/custom-container.component'
 import CustomInput from '../../components/custom-input.component'
@@ -12,7 +12,8 @@ import { useNavigate } from 'react-router-dom'
 import Popup from 'reactjs-popup'
 
 const AddExpense = () => {
-  const [title, setTitle] = useState('')
+  const [vendor, setVendor] = useState(null)
+  const [search, setSearch] = useState('')
   const [type, setType] = useState('')
   const [amount, setAmount] = useState(undefined)
   const [description, setDescription] = useState('')
@@ -23,12 +24,15 @@ const AddExpense = () => {
   const [vendorEmail, setVendorEmail] = useState('')
   const [vendorFirstName, setVendorFirstName] = useState('')
   const [vendorLastName, setVendorLastName] = useState('')
-
+  const [vendors, setVendors] = useState([])
+  const [showVendors, setShowVendors] = useState(false)
   const [recentExpenses, setRecentExpenses] = useState([])
+
+  const searchInputRef = useRef()
 
   const navigate = useNavigate()
 
-  const onCreateVendor = async () => {
+  const onCreateVendor = async (close) => {
     try {
       setLoading(true)
       const response = await axios.post(API.CREATE_VENDOR, {
@@ -45,6 +49,8 @@ const AddExpense = () => {
         setVendorFirstName('')
         setVendorName('')
         setVendorLastName('')
+        getAllVendors()
+        close()
       }
       setLoading(false)
     } catch (err) {
@@ -53,14 +59,27 @@ const AddExpense = () => {
     }
   }
 
+  useEffect(() => {
+    document.addEventListener('click', handleDocumentClick)
+    return () => {
+      document.removeEventListener('click', handleDocumentClick)
+    }
+  }, [])
+
+  const handleDocumentClick = (event) => {
+    if (!searchInputRef.current?.contains(event.target)) {
+      setShowVendors(false)
+    }
+  }
+
   const onSubmit = async (e) => {
     e.preventDefault()
     try {
-      if (!title || !type || !amount || !description || !date)
+      if (!vendor || !type || !amount || !description || !date)
         return errorNotify('All fields are required')
       setLoading(true)
       await axios.post(API.ADD_EXPENSE, {
-        title,
+        vendor: vendor._id,
         type,
         amount,
         description,
@@ -68,7 +87,7 @@ const AddExpense = () => {
       })
       successNotify('expense added')
 
-      setTitle('')
+      setVendor(null)
       setType('')
       setDescription('')
       setAmount(0)
@@ -99,8 +118,25 @@ const AddExpense = () => {
       errorNotify(err.response.data.message)
     }
   }
+
+  const getAllVendors = async () => {
+    try {
+      const response = await axios.get(API.GET_ALL_VENDORS)
+      setVendors(response.data.data)
+    } catch (err) {
+      console.log(err)
+      errorNotify(err.response.data.message)
+    }
+  }
+
+  const handleVendorSelect = (vendor) => {
+    setSearch(vendor.name)
+    setVendor(vendor)
+  }
+
   useEffect(() => {
     getRecentExpenses()
+    getAllVendors()
   }, [])
 
   return (
@@ -116,71 +152,111 @@ const AddExpense = () => {
         <form className="w-full mt-6 xl:w-2/4" onSubmit={onSubmit}>
           <div className="flex flex-col w-full flex-wrap">
             <div>
-              <div className="flex items-center">
-                <CustomInput
-                  placeholder="Vendor"
-                  value={title}
-                  onChange={(e) => setTitle(e.target.value)}
-                />
-                <Popup
-                  modal
-                  trigger={
-                    <button
-                      type="button"
-                      className="text-sm text-gray-500 border-[1px] border-gray-500 rounded-lg px-1"
-                    >
-                      + Add Vendor
-                    </button>
-                  }
-                  contentStyle={{ width: 'fit-content' }}
-                  className="w-fit-content"
-                >
-                  {(close) => (
-                    <div>
-                      <div className="flex border-b-2 border-slate-100 items-center justify-between p-2">
-                        <h1>Add Vendor</h1>
-                        <span className="cursor-pointer" onClick={close}>
-                          X
-                        </span>
-                      </div>
+              <div className="flex flex-col w-full xl:w-2/4 relative space-y-2">
+                <div className="relative items-center justify-center xl:w-[290px]">
+                  <input
+                    ref={searchInputRef}
+                    onChange={(e) => setSearch(e.target.value)}
+                    value={search}
+                    placeholder="Select Vendor..."
+                    className="outline-none border-[#FEBD20] border-2 rounded-lg p-2 text-sm w-full"
+                    onFocus={() => setShowVendors(true)}
+                  />
 
-                      <div className="flex flex-col items-center">
-                        <CustomInput
-                          placeholder="Vendor name"
-                          value={vendorName}
-                          onChange={(e) => setVendorName(e.target.value)}
-                        />
-                        <CustomInput
-                          placeholder="Email"
-                          value={vendorEmail}
-                          onChange={(e) => setVendorEmail(e.target.value)}
-                        />
-                        <CustomInput
-                          placeholder="First Name"
-                          value={vendorFirstName}
-                          onChange={(e) => setVendorFirstName(e.target.value)}
-                        />
-                        <CustomInput
-                          placeholder="Last Name"
-                          value={vendorLastName}
-                          onChange={(e) => setVendorLastName(e.target.value)}
-                        />
+                  {showVendors && (
+                    <ul className="absolute rounded-lg shadow-md z-20 bg-white w-full">
+                      {search.length > 0
+                        ? vendors
+                            .filter(
+                              (vendor) =>
+                                vendor.firstName
+                                  .toLowerCase()
+                                  .includes(search.toLowerCase()) ||
+                                vendor.lastName
+                                  .toLowerCase()
+                                  .includes(search.toLowerCase()) ||
+                                (vendor.firstName + ' ' + vendor.lastName)
+                                  .toLowerCase()
+                                  .includes(search.toLowerCase()),
+                            )
+                            .map((vendor) => (
+                              <li
+                                onClick={() => handleVendorSelect(vendor)}
+                                className="py-2 px-2 hover:bg-gray-200 ease-in duration-100"
+                              >
+                                {vendor.name}
+                              </li>
+                            ))
+                        : vendors.map((vendor) => (
+                            <li
+                              onClick={() => handleVendorSelect(vendor)}
+                              className="py-2 px-2 hover:bg-gray-200 ease-in duration-100"
+                            >
+                              {vendor.name}
+                            </li>
+                          ))}
+                    </ul>
+                  )}
+                  <Popup
+                    modal
+                    trigger={
+                      <button
+                        type="button"
+                        className="text-sm my-2 w-full text-gray-500 border-[1px] border-gray-500 rounded-lg px-1"
+                      >
+                        + Add Vendor
+                      </button>
+                    }
+                    contentStyle={{ width: 'fit-content' }}
+                    className="w-fit-content"
+                  >
+                    {(close) => (
+                      <div>
+                        <div className="flex border-b-2 border-slate-100 items-center justify-between p-2">
+                          <h1>Add Vendor</h1>
+                          <span className="cursor-pointer" onClick={close}>
+                            X
+                          </span>
+                        </div>
 
-                        <div className="space-x-3 p-3">
-                          <CustomButton type="button" onClick={close}>
-                            Cancel
-                          </CustomButton>
-                          <CustomButton
-                            loading={loading}
-                            onClick={onCreateVendor}
-                          >
-                            Add Vendor
-                          </CustomButton>
+                        <div className="flex flex-col items-center">
+                          <CustomInput
+                            placeholder="Vendor name"
+                            value={vendorName}
+                            onChange={(e) => setVendorName(e.target.value)}
+                          />
+                          <CustomInput
+                            placeholder="Email"
+                            value={vendorEmail}
+                            onChange={(e) => setVendorEmail(e.target.value)}
+                          />
+                          <CustomInput
+                            placeholder="First Name"
+                            value={vendorFirstName}
+                            onChange={(e) => setVendorFirstName(e.target.value)}
+                          />
+                          <CustomInput
+                            placeholder="Last Name"
+                            value={vendorLastName}
+                            onChange={(e) => setVendorLastName(e.target.value)}
+                          />
+
+                          <div className="space-x-3 p-3">
+                            <CustomButton type="button" onClick={close}>
+                              Cancel
+                            </CustomButton>
+                            <CustomButton
+                              loading={loading}
+                              onClick={() => onCreateVendor(close)}
+                            >
+                              Add Vendor
+                            </CustomButton>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  )}
-                </Popup>
+                    )}
+                  </Popup>
+                </div>
               </div>
               <div></div>
             </div>
