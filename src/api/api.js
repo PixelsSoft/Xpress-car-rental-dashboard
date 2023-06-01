@@ -37,6 +37,15 @@ const API = {
 
   CREATE_VENDOR: `${BASE_URL}/vendor/create`,
   GET_ALL_VENDORS: `${BASE_URL}/vendors`,
+
+  ADD_PAYMENT_METHOD: `${BASE_URL}/payment-method/create`,
+  GET_ALL_PAYMENT_METHODS: `${BASE_URL}/payment-methods`,
+
+  ADD_PAYMENT_ACCOUNT: `${BASE_URL}/payment-account/create`,
+  GET_PAYMENT_ACCOUNTS: `${BASE_URL}/payment-accounts`,
+
+  GET_TRANSACTIONS: `${BASE_URL}/transaction-history`,
+  CREATE_TRANSACTION: `${BASE_URL}/transaction-history/create`,
 }
 
 export default API

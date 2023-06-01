@@ -92,6 +92,7 @@ const AddExpense = () => {
       setDescription('')
       setAmount(0)
       setDate('')
+      setSearch('')
 
       getRecentExpenses()
       setLoading(false)
@@ -207,8 +208,8 @@ const AddExpense = () => {
                         + Add Vendor
                       </button>
                     }
-                    contentStyle={{ width: 'fit-content' }}
-                    className="w-fit-content"
+                    // contentStyle={{ width: 'fit-content' }}
+                    // className="w-fit-content"
                   >
                     {(close) => (
                       <div>
@@ -219,23 +220,27 @@ const AddExpense = () => {
                           </span>
                         </div>
 
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col items-center p-3">
                           <CustomInput
+                            full
                             placeholder="Vendor name"
                             value={vendorName}
                             onChange={(e) => setVendorName(e.target.value)}
                           />
                           <CustomInput
+                            full
                             placeholder="Email"
                             value={vendorEmail}
                             onChange={(e) => setVendorEmail(e.target.value)}
                           />
                           <CustomInput
+                            full
                             placeholder="First Name"
                             value={vendorFirstName}
                             onChange={(e) => setVendorFirstName(e.target.value)}
                           />
                           <CustomInput
+                            full
                             placeholder="Last Name"
                             value={vendorLastName}
                             onChange={(e) => setVendorLastName(e.target.value)}

@@ -11,6 +11,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { errorNotify, successNotify } from '../../../utils/success-notify.util'
 import Popup from 'reactjs-popup'
 import { useReactToPrint } from 'react-to-print'
+import convertMillisecondsToDate from '../../../utils/convertMillisecondsToDate'
 
 export default function CreateInvoice() {
   const [vehicles, setVehicles] = useState([])
@@ -18,7 +19,7 @@ export default function CreateInvoice() {
   const [customerName, setCustomerName] = useState('')
   const [customerEmail, setCustomerEmail] = useState('')
   const [invoiceDate, setInvoiceDate] = useState('')
-  const [dueDate, setDueDate] = useState('')
+  const [dueDate, setDueDate] = useState(Date.now())
   const [items, setItems] = useState([])
   const [total, setTotal] = useState(0)
   const [loading, setLoading] = useState(false)
@@ -119,6 +120,12 @@ export default function CreateInvoice() {
     generateInvoiceNumber()
   }, [])
 
+  useEffect(() => {
+    let date = convertMillisecondsToDate(Date.now())
+    setInvoiceDate(date)
+    setDueDate(date)
+  }, [])
+
   console.log(items[0])
   return (
     <Layout>
@@ -198,20 +205,22 @@ export default function CreateInvoice() {
                     </span>
                   </div>
                   <div ref={receiptRef} className="p-3">
-                    <div className="flex items-center justify-between border-b-2 border-slate-200">
+                    <div className="flex pb-3 items-center justify-between border-b-2 border-slate-200">
                       <img
                         alt=""
-                        src={require('../../../assets/images/logo.png')}
+                        src={require('../../../assets/images/logo-2.png')}
+                        className="w-80"
                       />
                       <div className="flex flex-col space-y-2">
-                        <h1 className="text-3xl font-light uppercase">
+                        <h1 className="text-3xl font-light uppercase text-end">
                           Invoice
                         </h1>
-                        <span className="font-bold text-sm">
+                        <span className="font-bold text-sm text-end">
                           Xpress Car Rental
                         </span>
-                        <span className="font-light text-sm">
-                          United States
+                        <span className="font-light text-xs  text-end">
+                          Tropical gardens road Nassau, New Providence The
+                          Bahamas
                         </span>
                       </div>
                     </div>
@@ -276,7 +285,7 @@ export default function CreateInvoice() {
                         <tr className="font-bold">
                           <td></td>
                           <td className="text-end py-2">Amount Due (USD):</td>
-                          <td className="text-end">$0.00</td>
+                          <td className="text-end">${total}</td>
                         </tr>
                       </tfoot>
                     </table>

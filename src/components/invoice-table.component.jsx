@@ -46,10 +46,12 @@ const InvoiceTable = ({
   // };
 
   const calculateTotal = useCallback(() => {
-    const total = items.reduce(
-      (acc, item) => acc + Number(item.price) * item.quantity,
-      0,
-    )
+    const total = items.reduce((acc, item) => {
+      if (item.quantity >= 7) {
+        return acc + 300 * item.quantity
+      }
+      return acc + Number(item.price) * item.quantity
+    }, 0)
     setTotal(total)
   }, [items, setTotal])
 
@@ -58,14 +60,14 @@ const InvoiceTable = ({
   }, [calculateTotal])
 
   const handleChange = (e, carId, key) => {
-    const updateditems = items.map((item) => {
+    let updatedItems = items.map((item) => {
       if (item.id === carId) {
         return { ...item, [key]: e.target.value }
       }
       return item
     })
 
-    setItems(updateditems)
+    setItems(updatedItems)
   }
   return (
     <>

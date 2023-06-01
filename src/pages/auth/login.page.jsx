@@ -68,7 +68,11 @@ export default function Login(props) {
       </div>
 
       <div className="flex flex-col space-y-8 items-center justify-center lg:w-1/2 w-full p-4 lg:p-0">
-        <img src={require('../../assets/images/logo.png')} alt="" />
+        <img
+          src={require('../../assets/images/logo-2.png')}
+          alt=""
+          className="xl:w-[500px] md:w-[400px] w-[300px]"
+        />
         <h3 className="font-bold text-4xl">Login</h3>
         <CustomInput
           value={email}

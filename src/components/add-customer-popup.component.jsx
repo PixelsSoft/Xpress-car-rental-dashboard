@@ -153,14 +153,17 @@ export default function AddCustomerPopup({
           </button>
         }
         modal
-        contentStyle={{ width: 'fit-content' }}
-        className="w-fit-content"
+        // contentStyle={{ width: 'fit-content' }}
+        // className="w-fit-content"
       >
         {(close) => (
           <div className="p-2">
             <div className="flex justify-between border-b-2 border-slate-200 p-2">
-              <span className="text-gray-400">New Customer</span>
-              <span onClick={close} className="cursor-pointer">
+              <span className="font-bold text-lg">New Customer</span>
+              <span
+                onClick={close}
+                className="cursor-pointer font-bold text-lg"
+              >
                 X
               </span>
             </div>
@@ -171,26 +174,31 @@ export default function AddCustomerPopup({
             >
               <div className="w-full flex flex-col items-center">
                 <CustomInput
+                  full
                   value={customer}
                   onChange={(e) => setCustomer(e.target.value)}
                   placeholder="Customer (Business or person)"
                 />
                 <CustomInput
+                  full
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email"
                 />
                 <CustomInput
+                  full
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
                   placeholder="Phone #"
                 />
                 <CustomInput
+                  full
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                   placeholder="First Name"
                 />
                 <CustomInput
+                  full
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder="Last Name"

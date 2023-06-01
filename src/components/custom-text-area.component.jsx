@@ -1,11 +1,13 @@
 import { useRef } from 'react'
 
-const CustomTextArea = ({ placeholder, ...rest }) => {
+const CustomTextArea = ({ placeholder, full, ...rest }) => {
   const ref = useRef(null)
   return (
     <div
       onClick={() => ref.current.focus()}
-      className="relative w-full xl:w-[290px] my-4 mx-2"
+      className={`relative w-full ${
+        full ? 'w-full' : 'xl:w-[290px]'
+      } my-4 mx-2`}
     >
       <textarea
         ref={ref}

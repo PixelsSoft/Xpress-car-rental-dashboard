@@ -5,6 +5,7 @@ import CustomButton from '../components/custom-button.component'
 import CustomInput from '../components/custom-input.component'
 import CustomTextArea from '../components/custom-text-area.component'
 import '../components/custom-modal/custom-modal.component'
+import RecordPayment from '../components/record-payment.component'
 
 export const rentedVehicleInfoTableColumns = [
   {
@@ -157,7 +158,6 @@ export const expensesColumns = (
             />
           }
           modal
-          closeOnDocumentClick
         >
           {(close) => (
             <div className="modal">
@@ -167,17 +167,20 @@ export const expensesColumns = (
               <div className="header">Expense # {row._id}</div>
               <div className="content flex flex-col">
                 <CustomInput
+                  full
                   placeholder="Type"
                   value={type}
                   onChange={(e) => setType(e.target.value)}
                 />
                 <CustomTextArea
+                  full
                   rows={7}
                   placeholder="Description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
                 />
                 <CustomInput
+                  full
                   placeholder="Amount"
                   value={amount}
                   onChange={(e) => setAmount(e.target.value)}
@@ -300,7 +303,7 @@ export const createInvoiceColumn = [
   },
 ]
 
-export const invoicesColumns = (handleDelete) => [
+export const invoicesColumns = (handleDelete, getInvoices) => [
   {
     name: 'Status',
     selector: (row) => row.status,
@@ -310,6 +313,7 @@ export const invoicesColumns = (handleDelete) => [
         style: {
           fontWeight: 'bold',
           color: 'red',
+          textTransform: 'uppercase',
         },
       },
       {
@@ -317,13 +321,15 @@ export const invoicesColumns = (handleDelete) => [
         style: {
           fontWeight: 'bold',
           color: 'green',
+          textTransform: 'uppercase',
         },
       },
       {
         when: (row) => row.status === 'due',
         style: {
           fontWeight: 'bold',
-          color: 'blue',
+          color: 'red',
+          textTransform: 'uppercase',
         },
       },
     ],
@@ -332,10 +338,7 @@ export const invoicesColumns = (handleDelete) => [
     name: 'Due',
     selector: (row) => row.dueDate,
   },
-  {
-    name: 'Date',
-    selector: (row) => row.invoiceDate,
-  },
+
   {
     name: 'Number',
     selector: (row) => row.invoiceNo,
@@ -347,22 +350,37 @@ export const invoicesColumns = (handleDelete) => [
   {
     name: 'Amount',
     selector: (row) => '$' + row.total,
+    style: {
+      fontWeight: 'bold',
+    },
+  },
+  {
+    name: 'Amount Due',
+    selector: (row) => (row.amountDue > 0 ? '$' + row.amountDue : '-'),
+    conditionalCellStyles: [
+      {
+        when: (row) => row.amountDue <= 0,
+        style: {
+          fontWeight: 'bold',
+          color: 'black',
+          textTransform: 'uppercase',
+        },
+      },
+      {
+        when: (row) => row.amountDue > 0,
+        style: {
+          fontWeight: 'bold',
+          color: 'red',
+        },
+      },
+    ],
   },
   {
     name: 'Actions',
     selector: (row) => row._id,
     cell: (row) => (
       <div className="flex">
-        {/* <img
-          src={require('../assets/icons/open.png')}
-          alt=""
-          className="cursor-pointer"
-        />
-        <img
-          src={require('../assets/icons/edit-2.png')}
-          alt=""
-          className="mx-3 cursor-pointer"
-        /> */}
+        <RecordPayment invoiceId={row._id} getInvoices={getInvoices} />
         <img
           src={require('../assets/icons/delete.png')}
           alt=""
