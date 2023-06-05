@@ -126,7 +126,6 @@ export default function CreateInvoice() {
     setDueDate(date)
   }, [])
 
-  console.log(items[0])
   return (
     <Layout>
       <CustomContainer otherStyles="p-6 flex flex-col xl:flex-row mt-8">

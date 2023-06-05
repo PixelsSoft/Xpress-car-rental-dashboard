@@ -23,14 +23,9 @@ export default function Menu() {
     },
     {
       id: 2,
-      title: 'Sales & Payments',
+      title: 'Invoices',
       icon: require('../assets/icons/card-tick.png'),
-      to: '#',
-      subMenu: true,
-      subMenuItems: [
-        { title: 'Invoicing', to: '/invoicing' },
-        { title: 'Payments' },
-      ],
+      to: '/invoicing',
     },
     {
       id: 3,

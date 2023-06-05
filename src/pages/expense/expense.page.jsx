@@ -20,7 +20,6 @@ const Expense = () => {
     try {
       setLoading(true)
       const { data } = await axios.get(API.GET_EXPENSES)
-      console.log(data)
       if (data) {
         setExpenses(data.data)
       }

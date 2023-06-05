@@ -10,6 +10,7 @@ const CustomSelect = ({
   addInputValue,
   addInputSubmitHandler,
   onChange,
+  showInput = true,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [openAddInput, setOpenAddInput] = useState(false)
@@ -39,7 +40,7 @@ const CustomSelect = ({
     setFunction(option)
     setIsOpen(false)
   }
-
+  console.log(value)
   return (
     <div
       ref={selectRef}
@@ -49,9 +50,11 @@ const CustomSelect = ({
     >
       <button
         onClick={toggleSelect}
-        className="bg-slate-50 border-b-2 text-gray-900 border-[#FEBD20] text-md px-2.5 py-3 w-full flex items-center justify-between"
+        className="bg-slate-50 border-b-2 text-gray-900 border-[#FEBD20] text-sm px-2.5 py-3.5 w-full flex items-center justify-between"
       >
-        {value ? value.name : label}
+        {value
+          ? value.name || value.firstName + ' ' + value.lastName || value
+          : label}
         <svg
           className={`w-5 h-5 ml-2 transition-transform ${
             isOpen ? 'transform rotate-180' : ''
@@ -75,31 +78,33 @@ const CustomSelect = ({
               onClick={() => handleOptionClick(option)}
               className="px-4 py-2 cursor-pointer hover:bg-gray-100"
             >
-              {option.name}
+              {option.name || option.firstName + ' ' + option.lastName}
             </li>
           ))}
-          {openAddInput ? (
-            <div className="flex border-2 bg-white justify-between border-slate-300 items-center">
-              <input
-                value={addInputValue}
-                onChange={onChange}
-                className=" bg-white rounded-lg p-2 outline-none"
-              />
-              <button
-                onClick={addInputSubmitHandler}
-                className="bg-black p-2 text-white text-xl cursor-pointer"
+          {showInput ? (
+            openAddInput ? (
+              <div className="flex border-2 bg-white justify-between border-slate-300 items-center">
+                <input
+                  value={addInputValue}
+                  onChange={onChange}
+                  className=" bg-white rounded-lg p-2 outline-none"
+                />
+                <button
+                  onClick={addInputSubmitHandler}
+                  className="bg-black p-2 text-white text-xl cursor-pointer"
+                >
+                  +
+                </button>
+              </div>
+            ) : (
+              <li
+                onClick={addInput}
+                className="font-bold bg-white p-2 border-1 border-black cursor-pointer hover:bg-black hover:text-white"
               >
-                +
-              </button>
-            </div>
-          ) : (
-            <li
-              onClick={addInput}
-              className="font-bold bg-white p-2 border-1 border-black cursor-pointer hover:bg-black hover:text-white"
-            >
-              + {addInputText}
-            </li>
-          )}
+                + {addInputText}
+              </li>
+            )
+          ) : null}
         </ul>
       )}
     </div>

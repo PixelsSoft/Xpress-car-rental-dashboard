@@ -37,6 +37,7 @@ const API = {
 
   CREATE_VENDOR: `${BASE_URL}/vendor/create`,
   GET_ALL_VENDORS: `${BASE_URL}/vendors`,
+  DELETE_VENDOR: `${BASE_URL}/vendors/delete`,
 
   ADD_PAYMENT_METHOD: `${BASE_URL}/payment-method/create`,
   GET_ALL_PAYMENT_METHODS: `${BASE_URL}/payment-methods`,

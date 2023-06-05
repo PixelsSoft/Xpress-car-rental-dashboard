@@ -27,16 +27,16 @@ export default function AddUser() {
     e.preventDefault()
     try {
       const response = await axios.post(API.CREATE_CUSTOMER, {
-        customer, 
+        customer,
         email,
         phone,
         firstName,
         lastName,
         address,
-        IdNumber
+        IdNumber,
       })
 
-      if(response.data) {
+      if (response.data) {
         setCustomer('')
         setEmail('')
         setPhone('')
@@ -48,8 +48,8 @@ export default function AddUser() {
         successNotify('User added')
       }
     } catch (err) {
-        console.log(err)
-        errorNotify(err.response.data.message)
+      console.log(err)
+      errorNotify(err.response.data.message)
     }
   }
   return (

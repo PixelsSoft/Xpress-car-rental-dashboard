@@ -24,7 +24,6 @@ export default function Login(props) {
         password,
       })
 
-      console.log(data)
       localStorage.setItem(
         '@user_details',
         JSON.stringify({

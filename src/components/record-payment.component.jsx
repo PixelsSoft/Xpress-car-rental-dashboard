@@ -124,9 +124,6 @@ export default function RecordPayment({ invoiceId, getInvoices }) {
     getPaymentMethodOptions()
   }, [])
 
-  console.log(paymentAccount)
-  console.log(paymentMethod)
-
   return (
     <Popup
       modal

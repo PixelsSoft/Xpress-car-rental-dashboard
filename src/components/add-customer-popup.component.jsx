@@ -71,7 +71,7 @@ export default function AddCustomerPopup({
   const getCustomers = async () => {
     try {
       const response = await axios.get(API.GET_CUSTOMERS)
-      setCustomers(response.data)
+      setCustomers(response.data.data)
     } catch (err) {
       console.log(err)
     }
@@ -138,7 +138,8 @@ export default function AddCustomerPopup({
                         .includes(search.toLowerCase()),
                   )
                   .map((user) => renderCustomers(user))
-              : customers.map((user) => renderCustomers(user))}
+              : customers.length > 0 &&
+                customers.map((user) => renderCustomers(user))}
           </ul>
         </div>
       )}

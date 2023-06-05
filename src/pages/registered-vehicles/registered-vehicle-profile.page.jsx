@@ -35,10 +35,11 @@ export default function RegisteredVehicleProfile() {
   const [type, setType] = useState('')
   const [registrationNo, setRegistrationNo] = useState('')
 
+  console.log(description)
+  console.log(images)
   const handleDeleteProfile = async () => {
     try {
       const response = await axios.delete(API.DELETE_VEHICLE_PROFILE + id)
-      console.log(response)
       if (response.data?.success) {
         navigate('/registered-vehicles')
       }
@@ -98,7 +99,6 @@ export default function RegisteredVehicleProfile() {
     getRentingHistory()
   }, [id])
 
-  console.log(images, description)
   return (
     <Layout>
       <CustomContainer>

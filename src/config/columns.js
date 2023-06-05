@@ -70,7 +70,7 @@ export const expensesColumns = (
   },
   {
     name: 'Vendor',
-    selector: (row) => row.vendor.name,
+    selector: (row) => row.vendor?.name,
   },
   {
     name: 'Type',
@@ -117,7 +117,7 @@ export const expensesColumns = (
                       <strong>Date: </strong>
                       {row.date}
                     </span>
-                    <strong className="text-lg">{row.vendor.name}</strong>
+                    <strong className="text-lg">{row.vendor?.name}</strong>
                     <span className="text-md">
                       <strong>Type: </strong>
                       {row.type}
@@ -217,7 +217,7 @@ export const usersColumn = [
   },
   {
     name: 'Name',
-    // selector: row => row.name,
+    selector: (row) => row.name,
     cell: (row) => (
       <Link to={`/user-profile/${row._id}`}>
         {row.firstName + ' ' + row.lastName}
@@ -307,32 +307,19 @@ export const invoicesColumns = (handleDelete, getInvoices) => [
   {
     name: 'Status',
     selector: (row) => row.status,
-    conditionalCellStyles: [
-      {
-        when: (row) => row.status === 'overdue',
-        style: {
-          fontWeight: 'bold',
-          color: 'red',
-          textTransform: 'uppercase',
-        },
-      },
-      {
-        when: (row) => row.status === 'paid',
-        style: {
-          fontWeight: 'bold',
-          color: 'green',
-          textTransform: 'uppercase',
-        },
-      },
-      {
-        when: (row) => row.status === 'due',
-        style: {
-          fontWeight: 'bold',
-          color: 'red',
-          textTransform: 'uppercase',
-        },
-      },
-    ],
+    cell: (row) => (
+      <div>
+        <span
+          className={` ${
+            row.status === 'paid'
+              ? 'bg-green-100 text-green-500'
+              : 'bg-red-100 text-red-500'
+          } font-bold px-2 py-1 uppercase`}
+        >
+          {row.status}
+        </span>
+      </div>
+    ),
   },
   {
     name: 'Due',
@@ -424,7 +411,7 @@ export const vehicleProfileColumns = [
   },
 ]
 
-export const vendorsColumns = [
+export const vendorsColumns = (deleteVendor) => [
   {
     name: 'Sno',
     selector: (row, idx) => <CustomIndexCell rowIndex={idx} />,
@@ -449,5 +436,19 @@ export const vendorsColumns = [
   {
     name: 'Last Name',
     selector: (row) => row.lastName,
+  },
+  {
+    name: 'Actions',
+    selector: (row) => row._id,
+    cell: (row) => (
+      <div className="flex">
+        <img
+          src={require('../assets/icons/delete.png')}
+          alt=""
+          className="cursor-pointer"
+          onClick={() => deleteVendor(row._id)}
+        />
+      </div>
+    ),
   },
 ]

@@ -59,7 +59,6 @@ export default function UserProfile() {
     const getCustomerProfile = async () => {
       try {
         const response = await axios.get(API.GET_CUSTOMERS + `${params.id}`)
-        console.log(response)
         setUser(response.data.data)
       } catch (err) {
         console.log(err)
