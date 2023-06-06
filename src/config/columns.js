@@ -6,6 +6,7 @@ import CustomInput from '../components/custom-input.component'
 import CustomTextArea from '../components/custom-text-area.component'
 import '../components/custom-modal/custom-modal.component'
 import RecordPayment from '../components/record-payment.component'
+import StatusBox from '../components/status-box.component'
 
 export const rentedVehicleInfoTableColumns = [
   {
@@ -57,44 +58,52 @@ export const expensesColumns = (
   setAmount,
   type,
   setType,
+  getExpenses,
 ) => [
   {
-    name: '#',
-    selector: (_, index) => index + 1,
-    sortable: false,
-    width: '80px',
-  },
-  {
-    name: 'Expense ID',
-    selector: (row) => row._id,
-  },
-  {
-    name: 'Vendor',
-    selector: (row) => row.vendor?.name,
-  },
-  {
-    name: 'Type',
-    selector: (row) => row.type,
-  },
-  {
-    name: 'Amount',
-    selector: (row) => '$' + row.amount,
+    name: 'Status',
+    selector: (row) => row.status,
+    width: '10%',
+    cell: (row) => <StatusBox status={row.status} />,
   },
   {
     name: 'Date',
     selector: (row) => row.date,
+    width: '20%',
+  },
+  {
+    name: 'Vendor',
+    selector: (row) => row.vendor?.name,
+    width: '20%',
+  },
+  {
+    name: 'Type',
+    selector: (row) => row.type,
+    width: '10%',
+  },
+  {
+    name: 'Amount',
+    selector: (row) => '$' + row.amount,
+    width: '10%',
+  },
+  {
+    name: 'Amount Due',
+    selector: (row) => '$' + row.amountDue,
+    width: '10%',
   },
   {
     name: 'Actions',
     selector: (row) => row._id,
+    width: '20%',
     cell: (row) => (
-      <div className="flex">
+      <div className="flex items-center space-x-2">
+        <RecordPayment id={row._id} callback={getExpenses} type="expense" />
         <Popup
           trigger={
             <img
               src={require('../assets/icons/open.png')}
               alt=""
-              className="cursor-pointer"
+              className="cursor-pointer h-5 w-5"
             />
           }
           modal
@@ -154,7 +163,7 @@ export const expensesColumns = (
             <img
               src={require('../assets/icons/edit-2.png')}
               alt=""
-              className="cursor-pointer mx-3"
+              className="cursor-pointer mx-3 h-5 w-5"
             />
           }
           modal
@@ -197,7 +206,7 @@ export const expensesColumns = (
         <img
           src={require('../assets/icons/delete.png')}
           alt=""
-          className="cursor-pointer"
+          className="cursor-pointer h-5 w-4"
           onClick={() => handleDelete(row._id)}
         />
       </div>
@@ -307,19 +316,8 @@ export const invoicesColumns = (handleDelete, getInvoices) => [
   {
     name: 'Status',
     selector: (row) => row.status,
-    cell: (row) => (
-      <div>
-        <span
-          className={` ${
-            row.status === 'paid'
-              ? 'bg-green-100 text-green-500'
-              : 'bg-red-100 text-red-500'
-          } font-bold px-2 py-1 uppercase`}
-        >
-          {row.status}
-        </span>
-      </div>
-    ),
+    cell: (row) => <StatusBox status={row.status} />,
+    width: '10%',
   },
   {
     name: 'Due',
@@ -365,13 +363,14 @@ export const invoicesColumns = (handleDelete, getInvoices) => [
   {
     name: 'Actions',
     selector: (row) => row._id,
+    width: '20%',
     cell: (row) => (
-      <div className="flex">
-        <RecordPayment invoiceId={row._id} getInvoices={getInvoices} />
+      <div className="flex items-center">
+        <RecordPayment id={row._id} callback={getInvoices} />
         <img
           src={require('../assets/icons/delete.png')}
           alt=""
-          className="cursor-pointer"
+          className="cursor-pointer h-5 w-4"
           onClick={() => handleDelete(row._id)}
         />
       </div>

@@ -10,6 +10,7 @@ import {
   Tooltip,
   LineController,
   BarController,
+  Title,
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
 
@@ -23,21 +24,32 @@ ChartJS.register(
   Tooltip,
   LineController,
   BarController,
+  Title,
 )
 
 const options = {
   plugins: {
     title: {
       display: true,
-      text: 'Chart.js Bar Chart - Stacked',
+      text: 'Cash Flow',
+      color: '#222',
+      position: 'top',
     },
+  },
+  scales: {
+    x: {
+      stacked: true,
+    },
+    // y: {
+    //   stacked: true,
+    // },
   },
   responsive: true,
 }
 
 export default function BarChart({ inflow, outflow }) {
   const inflows = inflow.map((obj) => obj.totalAmount)
-  const outflows = outflow.map((obj) => obj.totalAmount)
+  const outflows = outflow.map((obj) => Number('-' + obj.totalAmount))
   const netchange = inflow.map(
     (obj, idx) => obj.totalAmount - outflow[idx]?.totalAmount,
   )

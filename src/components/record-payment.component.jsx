@@ -9,7 +9,7 @@ import { errorNotify, successNotify } from '../utils/success-notify.util'
 import axios from 'axios'
 import API from '../api/api'
 
-export default function RecordPayment({ invoiceId, getInvoices }) {
+export default function RecordPayment({ id, callback, type = 'invoice' }) {
   const [date, setDate] = useState('')
   const [amount, setAmount] = useState(0)
   const [paymentMethod, setPaymentMethod] = useState(null)
@@ -91,7 +91,7 @@ export default function RecordPayment({ invoiceId, getInvoices }) {
     }
   }
 
-  const handleSubmit = async (close) => {
+  const handleInvoiceSubmit = async () => {
     try {
       setLoading(true)
       const response = await axios.post(API.CREATE_TRANSACTION, {
@@ -99,7 +99,7 @@ export default function RecordPayment({ invoiceId, getInvoices }) {
         amount: Number(amount),
         paymentMethod,
         paymentAccount,
-        invoice: invoiceId,
+        invoice: id,
       })
 
       if (response.data.success) {
@@ -109,14 +109,49 @@ export default function RecordPayment({ invoiceId, getInvoices }) {
         setMemo('')
         setLoading(false)
         successNotify('Success')
-        close()
-        getInvoices()
+
+        callback()
       }
     } catch (err) {
       console.log(err)
       setLoading(false)
       errorNotify(err.response.data.message)
     }
+  }
+
+  const handleExpenseSubmit = async () => {
+    try {
+      const response = await axios.post(API.RECORD_EXPENSE + `/${id}`, {
+        date,
+        amount: Number(amount),
+        paymentMethod,
+        paymentAccount,
+      })
+
+      if (response.data.success) {
+        setAmount(0)
+        setPaymentMethod(null)
+        setPaymentAccount(null)
+        setMemo('')
+        setLoading(false)
+        successNotify('Success')
+
+        callback()
+      }
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const handleSubmit = async (close) => {
+    if (type === 'invoice') {
+      handleInvoiceSubmit()
+    }
+
+    if (type === 'expense') {
+      handleExpenseSubmit()
+    }
+    close()
   }
 
   useEffect(() => {

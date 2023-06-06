@@ -135,7 +135,7 @@ const AddExpense = () => {
 
                   {showVendors && (
                     <ul className="absolute rounded-lg shadow-md z-20 bg-white w-full">
-                      {search.length > 0
+                      {search.length > 0 && vendors.length > 0
                         ? vendors
                             .filter(
                               (vendor) =>

@@ -10,6 +10,8 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import API from '../api/api'
 import { errorNotify } from '../utils/success-notify.util'
+import VerticalChart from '../components/vertical-chart'
+import { DoughnutChart } from '../components/doughnut-chart.component'
 
 export default function Dashboard() {
   const [totalAmount, setTotalAmount] = useState(0)
@@ -112,8 +114,10 @@ export default function Dashboard() {
 
       <CustomContainer otherStyles="mt-10 w-full p-4">
         <h2 className="font-bold text-3xl">Dashboard</h2>
-        <div className="w-full flex flex-row justify-center items-center">
+        <div className="w-full flex flex-col justify-center items-center">
           <BarChart inflow={inflow} outflow={outflow} />
+          <VerticalChart />
+          <DoughnutChart />
         </div>
       </CustomContainer>
 
