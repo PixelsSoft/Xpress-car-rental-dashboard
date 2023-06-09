@@ -11,6 +11,7 @@ import {
   LineController,
   BarController,
   Title,
+  Filler,
 } from 'chart.js'
 import { Chart } from 'react-chartjs-2'
 
@@ -25,6 +26,7 @@ ChartJS.register(
   LineController,
   BarController,
   Title,
+  Filler,
 )
 
 const options = {
@@ -35,7 +37,16 @@ const options = {
       color: '#222',
       position: 'top',
     },
+
+    tooltip: {
+      callbacks: {
+        label: function (tooltipItems) {
+          return `$ ${tooltipItems.formattedValue}`
+        },
+      },
+    },
   },
+
   scales: {
     x: {
       stacked: true,

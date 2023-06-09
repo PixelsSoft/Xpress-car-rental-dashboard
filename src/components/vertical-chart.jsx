@@ -23,6 +23,13 @@ export const options = {
       text: 'Profit & Loss',
       position: 'top',
     },
+    tooltip: {
+      callbacks: {
+        label: function (tooltipItems) {
+          return `$ ${tooltipItems.formattedValue}`
+        },
+      },
+    },
   },
 }
 
@@ -46,7 +53,7 @@ export const data = {
 
 export default function VerticalChart() {
   return (
-    <div className="w-full mt-10 flex justify-center h-[400px] text-2xl">
+    <div className="w-full mt-10 flex justify-center h-[800px] md:h-[500px] xl:h-[400px] text-2xl">
       <Bar options={options} data={data} />
     </div>
   )

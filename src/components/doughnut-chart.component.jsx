@@ -34,7 +34,7 @@ export const data = {
 
 export function DoughnutChart() {
   return (
-    <div className="w-full mt-10 flex justify-center h-[400px] text-2xl">
+    <div className="w-full mt-8 flex justify-center h-[400px] text-2xl">
       <Doughnut options={options} data={data} />
     </div>
   )
