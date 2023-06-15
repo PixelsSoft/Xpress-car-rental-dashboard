@@ -29,6 +29,12 @@ export default function Menu() {
     },
     {
       id: 3,
+      title: 'Recurring Invoices',
+      icon: require('../assets/icons/card-tick.png'),
+      to: '/recurring-invoices',
+    },
+    {
+      id: 4,
       title: 'User',
       icon: require('../assets/icons/user-icon.png'),
       to: '/users',
@@ -39,13 +45,13 @@ export default function Menu() {
       ],
     },
     {
-      id: 4,
+      id: 5,
       title: 'Registered Vehicles',
       icon: require('../assets/icons/car-icon.png'),
       to: '/registered-vehicles',
     },
     {
-      id: 5,
+      id: 6,
       title: 'Settings',
       icon: require('../assets/icons/setting-icon.png'),
       to: '/settings',
