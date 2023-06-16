@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import Login from './pages/auth/login.page'
 import Dashboard from './pages/dashboard.page'
 import User from './pages/user/user.page'
@@ -14,59 +14,64 @@ import AddCard from './pages/transactions/add-card.component'
 import ProtectedRoutes from './components/private-routes.component'
 import CreateInvoice from './pages/sales-and-payments/sub-menu/create-invoice.page'
 
-import {ToastContainer} from 'react-toastify'
+import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import Expense from './pages/expense/expense.page'
 import AddExpense from './pages/expense/add-expense.page'
 import AddUser from './pages/user/add-user.page'
 import Vendors from './pages/vendors/vendors.page'
 import RecurringInvoices from './pages/recurring-invoices/recurring-invoices.page'
-import CreateRecurringInvoice from "./pages/recurring-invoices/create-recurring-invoice.page";
+import CreateRecurringInvoice from './pages/recurring-invoices/create-recurring-invoice.page'
+import SingleInvoice from './pages/sales-and-payments/sub-menu/single-invoice.page'
 
 export default function App() {
-    return (
-        <>
-            <Router>
-                <Routes>
-                    <Route path="/" element={<Login/>}/>
-                    <Route element={<ProtectedRoutes/>}>
-                        <Route path="/dashboard" element={<Dashboard/>}/>
-                        <Route path="/sales-and-payments" element={<SalesAndPayments/>}/>
-                        <Route path="/users" element={<User/>}/>
-                        <Route path="/registered-vehicles" element={<RentedVehicles/>}/>
-                        <Route path="/settings" element={<Settings/>}/>
-                        <Route path="/add-vehicle" element={<AddVehicle/>}/>
-                        <Route path="/invoicing" element={<Invoicing/>}/>
-                        <Route path="/transactions" element={<Transactions/>}/>
-                        <Route path="/user-profile/:id" element={<UserProfile/>}/>
-                        <Route
-                            path="/vehicle-profile/:id"
-                            element={<RegisteredVehicleProfile/>}
-                        />
-                        <Route path="/add-card" element={<AddCard/>}/>
-                        <Route path="/create-invoice" element={<CreateInvoice/>}/>
-                        <Route path="/expenses" element={<Expense/>}/>
-                        <Route path="/add-expense" element={<AddExpense/>}/>
-                        <Route path="/add-user" element={<AddUser/>}/>
-                        <Route path="/vendors" element={<Vendors/>}/>
-                        <Route path="/recurring-invoices" element={<RecurringInvoices/>}/>
-                        <Route path="/create-recurring-invoice" element={<CreateRecurringInvoice/>}/>
-                    </Route>
-                </Routes>
-            </Router>
-            <ToastContainer
-                position="bottom-center"
-                autoClose={1000}
-                hideProgressBar={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                limit={1}
-                pauseOnFocusLoss={false}
-                draggable={false}
-                pauseOnHover={false}
-                theme="light"
+  return (
+    <>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Login />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/sales-and-payments" element={<SalesAndPayments />} />
+            <Route path="/users" element={<User />} />
+            <Route path="/registered-vehicles" element={<RentedVehicles />} />
+            <Route path="/settings" element={<Settings />} />
+            <Route path="/add-vehicle" element={<AddVehicle />} />
+            <Route path="/invoicing" element={<Invoicing />} />
+            <Route path="/invoicing/:id" element={<SingleInvoice />} />
+            <Route path="/transactions" element={<Transactions />} />
+            <Route path="/user-profile/:id" element={<UserProfile />} />
+            <Route
+              path="/vehicle-profile/:id"
+              element={<RegisteredVehicleProfile />}
             />
-        </>
-    )
+            <Route path="/add-card" element={<AddCard />} />
+            <Route path="/create-invoice" element={<CreateInvoice />} />
+            <Route path="/expenses" element={<Expense />} />
+            <Route path="/add-expense" element={<AddExpense />} />
+            <Route path="/add-user" element={<AddUser />} />
+            <Route path="/vendors" element={<Vendors />} />
+            <Route path="/recurring-invoices" element={<RecurringInvoices />} />
+            <Route
+              path="/create-recurring-invoice"
+              element={<CreateRecurringInvoice />}
+            />
+          </Route>
+        </Routes>
+      </Router>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={1000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        limit={1}
+        pauseOnFocusLoss={false}
+        draggable={false}
+        pauseOnHover={false}
+        theme="light"
+      />
+    </>
+  )
 }

@@ -5,7 +5,6 @@ import InvoicingStatCard from '../../../components/invoicing-stat-card.component
 import CustomInput from '../../../components/custom-input.component'
 import CustomTable from '../../../components/custom-table/custom-table.component'
 import { invoicesColumns } from '../../../config/columns'
-// import CustomBreadcumb from '../../../components/custom-breadcumb.component'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
 import API from '../../../api/api'
